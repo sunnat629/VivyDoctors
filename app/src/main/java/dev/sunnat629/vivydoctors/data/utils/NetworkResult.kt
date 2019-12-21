@@ -5,14 +5,14 @@ package dev.sunnat629.vivydoctors.data.utils
  * NetworkResult.kt
  * This sealed classes to wrap-up the response in Success, Error, RateLimit and NoInternet case.
  * */
-sealed class NetworkResult<out T : Any> {
+sealed class NetworkResult<out E : Any?> {
 
     /**
      * This class will call after fetching the data from server successfully.
      * It contains the data.
-     * @param T is the container of the data from the server.
+     * @param E is the container of the data from the server.
      * */
-    data class Success<out T : Any>(val data: T) : NetworkResult<T>()
+    data class Success<out E : Any?>(val data: E) : NetworkResult<E>()
 
     /**
      * This class will call if there is any error during fetching the data from server.

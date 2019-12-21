@@ -1,7 +1,8 @@
 package dev.sunnat629.vivydoctors.data.doctors
 
-import dev.sunnat629.vivydoctors.domain.doctors.VivyDoctorsRepository
 import dev.sunnat629.vivydoctors.data.utils.NetworkResult
+import dev.sunnat629.vivydoctors.domain.doctors.VivyDoctorsRepository
+import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsListDtoEntity
 import dev.sunnat629.vivydoctors.ui.base.BaseRepository
 import javax.inject.Inject
 
@@ -11,7 +12,8 @@ import javax.inject.Inject
  * @param vivyDoctorsApi is an injected {@linkplain VivyDoctorsApi service}
  * */
 class VivyDoctorsDataRepository @Inject constructor(
-    private val vivyDoctorsApi: VivyDoctorsApi
+    private val vivyDoctorsApi: VivyDoctorsApi,
+    private val mapper: DoctorsListDtoMapper
 ) :
     BaseRepository(), VivyDoctorsRepository {
 
@@ -20,7 +22,8 @@ class VivyDoctorsDataRepository @Inject constructor(
      *
      * @param doctors is the key-url using to fetch next doctors data.
      * */
-    override suspend fun getAllDoctors(doctors: String): NetworkResult<DoctorsListModel> {
-        return safeApiCall(call = { vivyDoctorsApi.getDoctorsList(doctors) })
+    override suspend fun getAllDoctors(doctors: String): NetworkResult<DoctorsListDtoEntity> {
+
+        return safeApiCall({ vivyDoctorsApi.getDoctorsList(doctors) }, mapper)
     }
 }

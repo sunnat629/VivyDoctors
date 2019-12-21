@@ -22,7 +22,7 @@ data class DoctorsModel(
     var phoneNumber: String?,
     var email: Any?,
     var website: String?,
-    var openingHours: List<DateTime>?,
+    var openingHours: List<String>?,
     var integration: Any?,
     var translation: Any?
 )

@@ -1,5 +1,6 @@
 package dev.sunnat629.vivydoctors.ui.base
 
+import dev.sunnat629.vivydoctors.data.utils.Mapper
 import dev.sunnat629.vivydoctors.data.utils.NetworkResult
 import dev.sunnat629.vivydoctors.ui.utils.LoggingTags.BASE_REPOSITORY
 import retrofit2.Response
@@ -18,12 +19,18 @@ open class BaseRepository {
      *
      * @param call is a suspending Response.
      * */
-    suspend fun <T : Any> safeApiCall(call: suspend () -> Response<T>): NetworkResult<T> {
-
+    suspend fun <E : Any, D : Any, M : Mapper<E, D>> safeApiCall(
+        call: suspend () -> Response<D>,
+        mapper: M
+    ): NetworkResult<E> {
         return try {
             if (call.invoke().isSuccessful) {
                 Timber.tag(BASE_REPOSITORY).d("Data fetched Successfully.")
-                NetworkResult.Success(call.invoke().body()!!)
+                val entity = call.invoke().body()?.let {
+                    mapper.mapToEntity(it)
+                }
+
+                NetworkResult.Success(entity!!)
             } else {
                 Timber.tag(BASE_REPOSITORY).e("${call.invoke().code()}: ${call.invoke().message()}")
                 NetworkResult.Error(call.invoke().message())

@@ -6,6 +6,7 @@ import dev.sunnat629.vivydoctors.ui.main.MainFragment
 
 @Module
 abstract class FragmentModule {
+
     @ContributesAndroidInjector
     abstract fun mainFragment(): MainFragment
 }

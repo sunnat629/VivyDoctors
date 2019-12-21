@@ -5,8 +5,8 @@ package dev.sunnat629.vivydoctors.ui.utils
  * This object class contains all the constant values of this project.
  * */
 object DSConstants {
-    const val RATE_LIMIT_CODE = 429
-    const val HEADER_AUTHORIZATION = "Authorization"
+    const val BASE_URL = "https://vivy.com/interviews/challenges/android/"
+
     const val FIRST_PAGE = "doctors"
     const val CONNECT_TIMEOUT = 30L
     const val WRITE_TIMEOUT = 30L

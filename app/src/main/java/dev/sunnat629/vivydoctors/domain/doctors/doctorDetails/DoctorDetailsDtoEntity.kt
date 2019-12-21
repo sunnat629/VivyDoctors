@@ -3,11 +3,11 @@ package dev.sunnat629.vivydoctors.domain.doctors.doctorDetails
 import org.joda.time.DateTime
 
 data class DoctorsDetailsDtoEntity(
-    var doctors: List<DoctorsEntity>?,
+    var doctors: List<DoctorDetailsEntity>?,
     var lastKey: String?
 )
 
-data class DoctorsEntity(
+data class DoctorDetailsEntity(
     var id: String?,
     var name: String?,
     var photoId: String?,

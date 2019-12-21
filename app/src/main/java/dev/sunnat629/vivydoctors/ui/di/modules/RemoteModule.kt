@@ -5,9 +5,13 @@ import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
-import dev.sunnat629.vivydoctors.ui.di.Authorized
+import dev.sunnat629.vivydoctors.BuildConfig
 import dev.sunnat629.vivydoctors.ui.di.GsonUtcDateAdapter
-import dev.sunnat629.vivydoctors.ui.utils.Constants.BASE_URL
+import dev.sunnat629.vivydoctors.ui.utils.DSConstants.BASE_URL
+import dev.sunnat629.vivydoctors.ui.utils.DSConstants.CONNECT_TIMEOUT
+import dev.sunnat629.vivydoctors.ui.utils.DSConstants.READ_TIMEOUT
+import dev.sunnat629.vivydoctors.ui.utils.DSConstants.WRITE_TIMEOUT
+import okhttp3.ConnectionPool
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -17,14 +21,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-
-@Module(includes = [ApiModule::class, AppModule::class])
+@Module(includes = [ApiModule::class])
 abstract class RemoteModule {
 
     @Module
     companion object {
-
-        private const val HEADER_AUTHORIZATION = "Authorization"
 
         @JvmStatic
         @Provides
@@ -56,24 +57,6 @@ abstract class RemoteModule {
             }
         }
 
-        @JvmStatic
-        @Singleton
-        @Provides
-        @Authorized
-        fun provideAuthorizedInterceptor(
-        ): Interceptor {
-            return Interceptor { chain ->
-                val original = chain.request()
-                val requestBuilder = original.newBuilder()
-                val accessToken = String() // todo add auth with raw or from sharedpref
-                val tokenType = String() // todo add auth with raw or from sharedpref
-
-                requestBuilder.header(HEADER_AUTHORIZATION, "$tokenType $accessToken")
-
-                val request = requestBuilder.build()
-                chain.proceed(request)
-            }
-        }
 
         @JvmStatic
         @Provides
@@ -83,25 +66,15 @@ abstract class RemoteModule {
             interceptor: Interceptor
         ): OkHttpClient {
             val httpClient = OkHttpClient.Builder()
-            httpClient.addInterceptor(interceptor)
-            httpClient.addInterceptor(httpLoggingInterceptor)
-            return httpClient.build()
-        }
-
-        @JvmStatic
-        @Provides
-        @Singleton
-        @Authorized
-        fun provideAuthorizedOkHttpClient(
-            httpLoggingInterceptor: HttpLoggingInterceptor,
-            @Authorized interceptor: Interceptor
-        ): OkHttpClient {
-            val httpClient = OkHttpClient.Builder()
-            httpClient.addInterceptor(interceptor)
-                .addInterceptor(httpLoggingInterceptor)
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
+                .addInterceptor(interceptor)
+                .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
+                .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+                .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(true)
+                .connectionPool(ConnectionPool(0, 1, TimeUnit.NANOSECONDS))
+            if (BuildConfig.DEBUG) {
+                httpClient.addInterceptor(httpLoggingInterceptor)
+            }
             return httpClient.build()
         }
 
@@ -114,26 +87,7 @@ abstract class RemoteModule {
         ): Retrofit {
             return Retrofit.Builder().baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(
-                    CoroutineCallAdapterFactory()
-                )
-                .client(httpClient)
-                .build()
-        }
-
-        @JvmStatic
-        @Singleton
-        @Provides
-        @Authorized
-        fun provideAuthorizedRetrofit(
-            @Authorized httpClient: OkHttpClient,
-            gson: Gson
-        ): Retrofit {
-            return Retrofit.Builder().baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(
-                    CoroutineCallAdapterFactory()
-                )
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .client(httpClient)
                 .build()
         }

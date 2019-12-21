@@ -5,8 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import dev.sunnat629.vivydoctors.data.doctors.VivyDoctorsDataRepository
 import dev.sunnat629.vivydoctors.data.utils.NetworkResult
-import dev.sunnat629.vivydoctors.data.utils.Status
-import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsListDtoEntity
+import dev.sunnat629.vivydoctors.data.utils.NetworkState
+import dev.sunnat629.vivydoctors.data.utils.NetworkState.Companion.ERROR
+import dev.sunnat629.vivydoctors.data.utils.NetworkState.Companion.LOADED
+import dev.sunnat629.vivydoctors.data.utils.NetworkState.Companion.LOADING
+import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsEntity
 import dev.sunnat629.vivydoctors.ui.utils.DSConstants.FIRST_PAGE
 import dev.sunnat629.vivydoctors.ui.utils.LoggingTags.DATA_S_FACTORY
 import kotlinx.coroutines.CoroutineScope
@@ -24,7 +27,7 @@ import timber.log.Timber
 class DoctorsDataSource(
     private val scope: CoroutineScope,
     private val vivyDoctorsRepository: VivyDoctorsDataRepository
-) : PageKeyedDataSource<Int, DoctorsListDtoEntity>() {
+) : PageKeyedDataSource<String, DoctorsEntity>() {
 
     /**
      * _networkState is a MutableLiveData of NetworkState which will changes based on the network status
@@ -68,7 +71,13 @@ class DoctorsDataSource(
         }
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, DoctorsListDtoEntity>) {
+    private val _nextPage = MutableLiveData<String>(FIRST_PAGE)
+    private val nextPage: LiveData<String> = _nextPage
+
+    override fun loadBefore(
+        params: LoadParams<String>,
+        callback: LoadCallback<String, DoctorsEntity>
+    ) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -80,8 +89,8 @@ class DoctorsDataSource(
      * @param callback is LoadInitialCallback: Callback that receives initial load data.
      * */
     override fun loadInitial(
-        params: LoadInitialParams<Int>,
-        callback: LoadInitialCallback<Int, DoctorsListDtoEntity>
+        params: LoadInitialParams<String>,
+        callback: LoadInitialCallback<String, DoctorsEntity>
     ) {
         setInitNetworkState(LOADING)
         Timber.tag(DATA_S_FACTORY).d("loadInitial ${params.requestedLoadSize}")
@@ -91,7 +100,13 @@ class DoctorsDataSource(
 
                 is NetworkResult.Success -> {
                     Timber.tag(DATA_S_FACTORY).d("loadInitial $FIRST_PAGE")
-                    callback.onResult(result.data.imageContent, null, FIRST_PAGE + 1)
+                    _nextPage.postValue("$FIRST_PAGE-${result.data.lastKey}")
+
+                    callback.onResult(
+                        result.data.doctors ?: emptyList(),
+                        null,
+                        nextPage.value
+                    )
                     setInitNetworkState(LOADED)
                 }
 
@@ -127,17 +142,18 @@ class DoctorsDataSource(
      * @param params is LoadParams: Parameters for the load, including the key for the new page, and requested load size.
      * @param callback is LoadCallback: Callback that receives loaded data.
      * */
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, DoctorsListDtoEntity>) {
+    override fun loadAfter(
+        params: LoadParams<String>,
+        callback: LoadCallback<String, DoctorsEntity>
+    ) {
 
         scope.launch {
-            val key = params.key + 1
-            Timber.tag(DATA_S_FACTORY).d("loadAfter $key")
 
-            when (val result = vivyDoctorsRepository.getImages(key)) {
+            when (val result = vivyDoctorsRepository.getAllDoctors(nextPage.value!!)) {
 
                 is NetworkResult.Success -> {
-                    callback.onResult(result.data.imageContent, key)
-                    _networkState.postValue(Status.LOADED)
+                    callback.onResult(result.data.doctors ?: emptyList(), nextPage.value)
+                    _networkState.postValue(LOADED)
                 }
 
                 is NetworkResult.Error -> {

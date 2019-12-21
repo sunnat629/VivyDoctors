@@ -13,10 +13,4 @@ object ApiModule {
     fun provideAuthApi(retrofit: Retrofit): VivyDoctorsApi {
         return retrofit.create(VivyDoctorsApi::class.java)
     }
-
-//    @JvmStatic
-//    @Provides
-//    fun provideProductApi(@Authorized retrofit: Retrofit): VivyDoctorsApi {
-//        return retrofit.create(VivyDoctorsApi::class.java)
-//    }
 }

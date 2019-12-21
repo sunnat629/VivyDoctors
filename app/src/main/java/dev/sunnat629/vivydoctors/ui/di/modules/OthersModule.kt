@@ -7,6 +7,7 @@ import dev.sunnat629.vivydoctors.data.doctors.VivyDoctorsDataRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import javax.inject.Singleton
 
 /**
@@ -28,7 +29,7 @@ class OthersModule {
     @Provides
     @Singleton
     fun provideScope(): CoroutineScope {
-        return CoroutineScope(Job() + Dispatchers.Main + Dispatchers.IO)
+        return CoroutineScope(SupervisorJob() + Dispatchers.Main + Dispatchers.IO)
     }
 
     /**
