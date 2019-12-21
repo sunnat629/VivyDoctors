@@ -33,23 +33,13 @@ class DoctorsDataSource(
      * _networkState is a MutableLiveData of NetworkState which will changes based on the network status
      * */
     private val _networkState: MutableLiveData<NetworkState> = MutableLiveData()
-
-    /**
-     * networkState is a LiveData of NetworkState which will changes based on {@see _networkState}
-     * */
-    val networkState: LiveData<NetworkState>
-        get() = _networkState
+    val networkState: LiveData<NetworkState> = _networkState
 
     /**
      * _initialLoad is a MutableLiveData of NetworkState which will changes based on the network status
      * */
     private val _initialLoad: MutableLiveData<NetworkState> = MutableLiveData()
-
-    /**
-     * initialLoad is a LiveData of NetworkState which will changes based on {@see _initialLoad}
-     * */
-    val initialLoad: LiveData<NetworkState>
-        get() = _initialLoad
+    val initialLoad: LiveData<NetworkState> = _initialLoad
 
     /**
      * retry will use to trigger this DataSource class again if there is any error during fetch the
@@ -71,6 +61,9 @@ class DoctorsDataSource(
         }
     }
 
+    /**
+     * _nextPage is a MutableLiveData of last doctors data using "lastKey" which will changes based the new doctor list
+     * */
     private val _nextPage = MutableLiveData<String>(FIRST_PAGE)
     private val nextPage: LiveData<String> = _nextPage
 
@@ -92,7 +85,7 @@ class DoctorsDataSource(
         params: LoadInitialParams<String>,
         callback: LoadInitialCallback<String, DoctorsEntity>
     ) {
-        setInitNetworkState(LOADING)
+        _initialLoad.postValue(LOADING)
         Timber.tag(DATA_S_FACTORY).d("loadInitial ${params.requestedLoadSize}")
 
         scope.launch {
@@ -107,28 +100,21 @@ class DoctorsDataSource(
                         null,
                         nextPage.value
                     )
-                    setInitNetworkState(LOADED)
+                    _initialLoad.postValue(LOADED)
                 }
 
                 is NetworkResult.Error -> {
                     retry = {
                         loadInitial(params, callback)
                     }
-                    setInitNetworkState(ERROR(result.exception))
+                    _initialLoad.postValue(ERROR(result.exception))
                 }
 
                 is NetworkResult.NoInternet -> {
                     retry = {
                         loadInitial(params, callback)
                     }
-                    setInitNetworkState(ERROR(result.message))
-                }
-
-                is NetworkResult.RateLimit -> {
-                    retry = {
-                        loadInitial(params, callback)
-                    }
-                    setInitNetworkState(ERROR(result.message))
+                    _initialLoad.postValue(ERROR(result.message))
                 }
             }
         }
@@ -149,9 +135,12 @@ class DoctorsDataSource(
 
         scope.launch {
 
+            _networkState.postValue(LOADING)
             when (val result = vivyDoctorsRepository.getAllDoctors(nextPage.value!!)) {
 
                 is NetworkResult.Success -> {
+                    _nextPage.postValue("$FIRST_PAGE-${result.data.lastKey}")
+
                     callback.onResult(result.data.doctors ?: emptyList(), nextPage.value)
                     _networkState.postValue(LOADED)
                 }
@@ -169,24 +158,7 @@ class DoctorsDataSource(
                     }
                     _networkState.postValue(ERROR(result.message))
                 }
-
-                is NetworkResult.RateLimit -> {
-                    retry = {
-                        loadAfter(params, callback)
-                    }
-                    _networkState.postValue(ERROR(result.message))
-                }
             }
         }
-    }
-
-    /**
-     * This function sets the network status of
-     * @see _networkState value and
-     * @see _initialLoad value
-     * */
-    private fun setInitNetworkState(networkState: NetworkState) {
-        _networkState.postValue(networkState)
-        _initialLoad.postValue(networkState)
     }
 }

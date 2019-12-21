@@ -26,12 +26,5 @@ sealed class NetworkResult<out E : Any?> {
      * It contains the error message.
      * @param message mentions that the application exceeds its limit.
      * */
-    data class RateLimit(val message: String) : NetworkResult<Nothing>()
-
-    /**
-     * This class will call if the application exceeds its limit.
-     * It contains the error message.
-     * @param message mentions that the application exceeds its limit.
-     * */
     data class NoInternet(val message: String) : NetworkResult<Nothing>()
 }

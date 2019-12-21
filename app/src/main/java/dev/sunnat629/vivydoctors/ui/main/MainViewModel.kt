@@ -27,12 +27,12 @@ class MainViewModel @Inject constructor(
         .build()
 
     /**
-     * This immutable variable contains the image data after fetching from.
+     * This immutable variable contains the doctor data after fetching from.
      * */
     var doctorsList: LiveData<PagedList<DoctorsEntity>>
 
     /**
-     * initialize the viewModel where we inject the component and retrieve the image data using
+     * initialize the viewModel where we inject the component and retrieve the doctor data using
      * DataSourceFactory.
      * */
     init {
