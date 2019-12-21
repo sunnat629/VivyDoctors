@@ -1,8 +1,12 @@
 package dev.sunnat629.vivydoctors.ui.main
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.sunnat629.vivydoctors.R
 import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsEntity
 import dev.sunnat629.vivydoctors.ui.base.BaseActivity
@@ -10,18 +14,14 @@ import dev.sunnat629.vivydoctors.ui.main.adapters.DoctorsAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
-class MainActivity : BaseActivity<MainViewModel>() {
+class MainActivity : BaseActivity<MainViewModel>(),
+    BottomNavigationView.OnNavigationItemSelectedListener{
 
-    private val doctorsAdapter by lazy {
-        DoctorsAdapter(
-            { singleDoctor ->
-                onDoctorClick(singleDoctor)
-            },
-            {
-                retryCallback()
-            }
-        )
-    }
+
+    private lateinit var navController: NavController
+    private lateinit var bottomNavigation: BottomNavigationView
+
+    private var selectedTab = 0
 
     override val layoutResId: Int = R.layout.activity_main
 
@@ -30,38 +30,38 @@ class MainActivity : BaseActivity<MainViewModel>() {
     override fun getViewModel(): Class<MainViewModel> = MainViewModel::class.java
 
     override fun onInitialize(instance: Bundle?, viewModel: MainViewModel) {
+        initNavControl()
         initObservers()
-        initRecyclerView()
     }
 
+    private fun initNavControl() {
+        navController = Navigation.findNavController(this, R.id.navHostFragment)
+        bottomNavigation = findViewById(R.id.bottomNavigation)
+    }
 
     private fun initObservers() {
         viewModel.getNetworkState().observe(this, Observer {
-            Timber.tag("ASDF").i("getNetworkState")
         })
+
         viewModel.getInitialLoad().observe(this, Observer {
-            Timber.tag("ASDF").e("getInitialLoad")
-        })
-        viewModel.doctorsList.observe(this, Observer {
-            Timber.tag("ASDF").e("${it.size}")
-
-            doctorsAdapter.submitList(it)
         })
     }
 
-    private fun initRecyclerView() {
-        doctorRecyclerView.apply {
-            this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            this.adapter = doctorsAdapter
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.doctorListFragment -> {
+                navController.navigate(R.id.doctorListFragment)
+                true
+            }
+            R.id.doctorDetailsFragment -> {
+                navController.navigate(R.id.doctorDetailsFragment)
+                true
+            }
+            R.id.recentDoctorsFragment -> {
+                navController.navigate(R.id.recentDoctorsFragment)
+                true
+            }
+            else -> false
         }
-    }
-
-
-    private fun retryCallback() {
-        Timber.tag("ASDF").e("retryCallback")
-    }
-
-    private fun onDoctorClick(singleDoctor: DoctorsEntity) {
-        Timber.tag("ASDF").d(singleDoctor.toString())
     }
 }

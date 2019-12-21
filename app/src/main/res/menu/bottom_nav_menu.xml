@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/doctorListFragment"
+        android:icon="@drawable/ic_home"
+        android:title="@string/nav_all_doctor"/>
+
+    <item
+        android:id="@+id/recentDoctorsFragment"
+        android:icon="@drawable/ic_recent"
+        android:title="@string/nav_recent_doctors"/>
+</menu>

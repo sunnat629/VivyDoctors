@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.sunnat629.vivydoctors.R
 import dev.sunnat629.vivydoctors.data.utils.NetworkState
 import dev.sunnat629.vivydoctors.data.utils.Status
-import kotlinx.android.synthetic.main.vh_network_state.view.*
+import kotlinx.android.synthetic.main.content_network_state.view.*
 
 /**
  * NetworkStateViewHolder.kt
@@ -36,13 +36,13 @@ class NetworkStateViewHolder(view: View, private val retryCallback: () -> Unit) 
         itemView.retryLoadingButton.visibility =
             if (networkState?.status == Status.FAILED) View.VISIBLE else View.GONE
         itemView.loadingProgressBar.visibility =
-            if (networkState?.status == Status.RUNNING) View.VISIBLE else View.GONE
+            if (networkState?.status == Status.LOADING) View.VISIBLE else View.GONE
     }
 
     companion object {
         fun create(parent: ViewGroup, retryCallback: () -> Unit): NetworkStateViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
-            val view = layoutInflater.inflate(R.layout.vh_network_state, parent, false)
+            val view = layoutInflater.inflate(R.layout.content_network_state, parent, false)
             return NetworkStateViewHolder(view, retryCallback)
         }
     }

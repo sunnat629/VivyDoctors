@@ -4,11 +4,11 @@ import android.os.Bundle
 import dev.sunnat629.vivydoctors.R
 import dev.sunnat629.vivydoctors.ui.base.BaseFragment
 
-class MainFragment : BaseFragment<MainViewModel>(){
+class DoctorDetailsFragment : BaseFragment<MainViewModel>() {
 
-    override val layoutResId: Int = R.layout.fragment_main
+    override val layoutResId: Int = R.layout.fragment_doctor_details
 
-    override val screenName: String? = MainFragment::class.java.simpleName
+    override val screenName: String? = DoctorDetailsFragment::class.java.simpleName
 
     override fun getViewModel(): Class<MainViewModel> = MainViewModel::class.java
 
@@ -19,19 +19,19 @@ class MainFragment : BaseFragment<MainViewModel>(){
         initObservers()
     }
 
-    override fun initToolbar() {
+    private fun initToolbar() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initUI() {
+    private fun initUI() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initButtons() {
+    private fun initButtons() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun initObservers() {
+    private fun initObservers() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

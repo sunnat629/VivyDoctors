@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Vivy Doctors</string>
+
+    <string name="nav_all_doctor">All Doctor</string>
+    <string name="nav_recent_doctors">Recent Doctors</string>
+    <string name="retry">Retry</string>
 </resources>

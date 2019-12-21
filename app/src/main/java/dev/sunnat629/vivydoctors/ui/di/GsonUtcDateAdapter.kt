@@ -7,15 +7,23 @@ import com.google.gson.JsonParseException
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import java.lang.reflect.Type
+import java.text.DateFormat
 import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
+class GsonUTCDateAdapter : JsonDeserializer<DateTime> {
 
-class GsonUtcDateAdapter(
-    private val dateFormat: String = DEFAULT_DATE_TIME_FORMAT
-) : JsonDeserializer<DateTime> {
+    companion object{
+        const val DATE_FORMAT_UTC = "'D'd'T'hh:mm/'D'd'T'hh:mm"
 
-    companion object {
-        const val DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZZ"
+        const val PATTERN_YYYY_MM_DD = "hh:mm"
+    }
+
+    private val dateFormat: DateFormat
+
+    init {
+        dateFormat = SimpleDateFormat(DATE_FORMAT_UTC, Locale.getDefault())
     }
 
     @Synchronized
@@ -25,7 +33,7 @@ class GsonUtcDateAdapter(
         jsonDeserializationContext: JsonDeserializationContext
     ): DateTime {
         try {
-            val formatter = DateTimeFormat.forPattern(dateFormat)
+            val formatter = DateTimeFormat.forPattern(PATTERN_YYYY_MM_DD)
             return formatter.parseDateTime(jsonElement.asString)
         } catch (e: ParseException) {
             throw JsonParseException(e)

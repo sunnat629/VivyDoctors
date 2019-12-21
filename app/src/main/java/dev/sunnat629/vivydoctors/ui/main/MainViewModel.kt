@@ -1,15 +1,18 @@
 package dev.sunnat629.vivydoctors.ui.main
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import dev.sunnat629.vivydoctors.data.utils.NetworkState
+import dev.sunnat629.vivydoctors.data.utils.Status
 import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsEntity
 import dev.sunnat629.vivydoctors.ui.base.BaseViewModel
 import dev.sunnat629.vivydoctors.ui.datasource.DataSourceFactory
 import dev.sunnat629.vivydoctors.ui.utils.DSConstants.INITIAL_LOAD_SIZE
 import dev.sunnat629.vivydoctors.ui.utils.DSConstants.PAGE_SIZE
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -29,7 +32,10 @@ class MainViewModel @Inject constructor(
     /**
      * This immutable variable contains the doctor data after fetching from.
      * */
-    var doctorsList: LiveData<PagedList<DoctorsEntity>>
+    val doctorsList: LiveData<PagedList<DoctorsEntity>>
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
 
     /**
      * initialize the viewModel where we inject the component and retrieve the doctor data using

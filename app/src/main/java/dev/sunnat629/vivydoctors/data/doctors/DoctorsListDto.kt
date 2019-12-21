@@ -1,7 +1,5 @@
 package dev.sunnat629.vivydoctors.data.doctors
 
-import org.joda.time.DateTime
-
 data class DoctorsListDto(
     var doctors: List<DoctorsModel>?,
     var lastKey: String?

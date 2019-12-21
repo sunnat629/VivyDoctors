@@ -6,7 +6,7 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import dagger.Module
 import dagger.Provides
 import dev.sunnat629.vivydoctors.BuildConfig
-import dev.sunnat629.vivydoctors.ui.di.GsonUtcDateAdapter
+import dev.sunnat629.vivydoctors.ui.di.GsonUTCDateAdapter
 import dev.sunnat629.vivydoctors.ui.utils.DSConstants.BASE_URL
 import dev.sunnat629.vivydoctors.ui.utils.DSConstants.CONNECT_TIMEOUT
 import dev.sunnat629.vivydoctors.ui.utils.DSConstants.READ_TIMEOUT
@@ -32,7 +32,7 @@ abstract class RemoteModule {
         @Singleton
         fun provideGson(): Gson {
             return GsonBuilder()
-                .registerTypeAdapter(DateTime::class.java, GsonUtcDateAdapter())
+                .registerTypeAdapter(DateTime::class.java, GsonUTCDateAdapter())
                 .create()
         }
 

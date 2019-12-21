@@ -48,9 +48,4 @@ abstract class BaseFragment<M : BaseViewModel> : DaggerFragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(getViewModel())
         onInitialize(savedInstanceState, viewModel)
     }
-
-    abstract fun initToolbar()
-    abstract fun initUI()
-    abstract fun initButtons()
-    abstract fun initObservers()
 }

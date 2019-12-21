@@ -5,10 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import dev.sunnat629.vivydoctors.R
 import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsEntity
 import kotlinx.android.synthetic.main.vh_doctor_list.view.*
-import timber.log.Timber
 
 /**
  * DoctorsViewHolder.kt
@@ -19,15 +19,19 @@ import timber.log.Timber
 class DoctorsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bindTo(doctorsEntity: DoctorsEntity?) {
-        Timber.tag("QWER").d(doctorsEntity.toString())
 
         doctorsEntity?.apply {
             itemView.doctorName.text = name
+            itemView.doctorAddress.text = address
+            itemView.reviewCount.text = reviewCount?.toString()?: "0"
+            itemView.ratingBar.rating = rating?.toFloat()?: 0f
 
-//            Glide.with(itemView)
-//                .load(it.photoId)
-//                .placeholder(R.drawable.ic_launcher_background)
-//                .into(itemView.doctorPhoto)
+            Glide.with(itemView)
+                .asBitmap()
+                .apply( RequestOptions().override(200, 200))
+                .load(photoId)
+                .placeholder(R.drawable.ic_perm_identity)
+                .into(itemView.doctorPhoto)
         }
     }
 

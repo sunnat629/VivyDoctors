@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/doctorListFragment">
+
+    <fragment
+        android:id="@+id/doctorListFragment"
+        android:name="dev.sunnat629.vivydoctors.ui.main.DoctorListFragment"
+        tools:layout="@layout/fragment_doctors">
+        <action
+            android:id="@+id/action_doctorListFragment_to_doctorDetailsFragment"
+            app:destination="@id/doctorDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recentDoctorsFragment"
+        android:name="dev.sunnat629.vivydoctors.ui.main.RecentDoctorsFragment"
+        tools:layout="@layout/fragment_recent_doctor">
+        <action
+            android:id="@+id/action_recentDoctorsFragment_to_doctorDetailsFragment"
+            app:destination="@id/doctorDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/doctorDetailsFragment"
+        android:name="dev.sunnat629.vivydoctors.ui.main.DoctorDetailsFragment"
+        tools:layout="@layout/fragment_doctor_details"/>
+</navigation>
