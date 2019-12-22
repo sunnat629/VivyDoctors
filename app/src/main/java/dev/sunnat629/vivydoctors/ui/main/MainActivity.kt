@@ -5,23 +5,16 @@ import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.sunnat629.vivydoctors.R
-import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsEntity
 import dev.sunnat629.vivydoctors.ui.base.BaseActivity
-import dev.sunnat629.vivydoctors.ui.main.adapters.DoctorsAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_tab_items.*
 import timber.log.Timber
 
 class MainActivity : BaseActivity<MainViewModel>(),
-    BottomNavigationView.OnNavigationItemSelectedListener{
-
-
-    private lateinit var navController: NavController
-    private lateinit var bottomNavigation: BottomNavigationView
-
-    private var selectedTab = 0
+    BottomNavigationView.OnNavigationItemSelectedListener {
 
     override val layoutResId: Int = R.layout.activity_main
 
@@ -31,12 +24,12 @@ class MainActivity : BaseActivity<MainViewModel>(),
 
     override fun onInitialize(instance: Bundle?, viewModel: MainViewModel) {
         initNavControl()
+        initTabLayouts()
         initObservers()
     }
 
     private fun initNavControl() {
-        navController = Navigation.findNavController(this, R.id.navHostFragment)
-        bottomNavigation = findViewById(R.id.bottomNavigation)
+//        bottomNavigation.setOnNavigationItemSelectedListener(this)
     }
 
     private fun initObservers() {
@@ -47,18 +40,27 @@ class MainActivity : BaseActivity<MainViewModel>(),
         })
     }
 
+    private fun initTabLayouts() {
+        val tabsPagerAdapter = ViewPagerAdapter(this, supportFragmentManager)
+        saViewPager.adapter = tabsPagerAdapter
+        tabLayout.setupWithViewPager(saViewPager)
+    }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.doctorListFragment -> {
-                navController.navigate(R.id.doctorListFragment)
+                Timber.tag("ASDF").d("doctorListFragment")
+//                navController.navigate(R.id.doctorListFragment)
                 true
             }
             R.id.doctorDetailsFragment -> {
-                navController.navigate(R.id.doctorDetailsFragment)
+//                navController.navigate(R.id.doctorDetailsFragment)
+                Timber.tag("ASDF").d("doctorDetailsFragment")
                 true
             }
             R.id.recentDoctorsFragment -> {
-                navController.navigate(R.id.recentDoctorsFragment)
+//                navController.navigate(R.id.recentDoctorsFragment)
+                Timber.tag("ASDF").d("recentDoctorsFragment")
                 true
             }
             else -> false

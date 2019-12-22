@@ -12,6 +12,7 @@ import dev.sunnat629.vivydoctors.ui.utils.showIf
 import kotlinx.android.synthetic.main.fragment_doctors.*
 import timber.log.Timber
 
+
 class DoctorListFragment : BaseFragment<MainViewModel>() {
 
     private val doctorsAdapter by lazy {
@@ -44,19 +45,33 @@ class DoctorListFragment : BaseFragment<MainViewModel>() {
     }
 
     private fun initObservers() {
-        viewModel.getNetworkState().observe(this, Observer {
+        viewModel.getNetworkState().observe(viewLifecycleOwner, Observer {
             loadingProgressBar.showIf(it.status == Status.LOADING)
         })
 
-        viewModel.getInitialLoad().observe(this, Observer {
-            loadingProgressBar.showIf(it.status == Status.LOADING)
+        viewModel.getInitialLoad().observe(viewLifecycleOwner, Observer {
+            if (it.status == Status.LOADING) {
+                shimmerViewContainer.startShimmer()
+            }
+            else shimmerViewContainer.hideShimmer()
         })
 
-        viewModel.doctorsList.observe(this, Observer {
+        viewModel.doctorsList.observe(viewLifecycleOwner, Observer {
+
+            doctorsAdapter.currentList
             doctorsAdapter.submitList(it)
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        shimmerViewContainer.startShimmer()
+    }
+
+    override fun onPause() {
+        shimmerViewContainer.stopShimmer()
+        super.onPause()
+    }
 
     private fun onDoctorClick(singleDoctor: DoctorsEntity) {
         Timber.tag("ASDF").d(singleDoctor.toString())
