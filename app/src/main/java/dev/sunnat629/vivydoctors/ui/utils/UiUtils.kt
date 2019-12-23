@@ -72,8 +72,10 @@ fun <T> List<T>.isNotNullOrEmpty(): Boolean {
     return this.isNullOrEmpty().not()
 }
 
-operator fun <T> MutableLiveData<List<T>>.plusAssign(values: List<T>) {
+operator fun <T> MutableLiveData<List<T>>.plusAssign(values: T) {
     val value = this.value?.toMutableList() ?: mutableListOf()
-    value.addAll(values)
-    this.value = value
+    if (!value.contains(values)) {
+        value.add(values)
+        this.value = value
+    }
 }

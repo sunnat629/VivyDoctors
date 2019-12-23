@@ -70,10 +70,6 @@ class DoctorListFragment : DaggerFragment() {
         viewModel.doctorsList.observe(viewLifecycleOwner, Observer {
             doctorsAdapter.submitList(it)
         })
-
-        viewModel.recentDoctors.observe(viewLifecycleOwner, Observer {
-            Timber.tag("ASDF").e("SIZE: ${it.size}")
-        })
     }
 
     override fun onResume() {

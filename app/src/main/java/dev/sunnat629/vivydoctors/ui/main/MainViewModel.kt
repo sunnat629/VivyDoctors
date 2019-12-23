@@ -85,6 +85,6 @@ class MainViewModel @Inject constructor(
     }
 
     fun addToRecentDoctorList(singleDoctor: DoctorsEntity) {
-        _recentDoctors.plusAssign(listOf(singleDoctor))
+        _recentDoctors.plusAssign(singleDoctor)
     }
 }
