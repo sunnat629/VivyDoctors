@@ -56,9 +56,6 @@ class RecentDoctorsFragment : DaggerFragment() {
     }
 
     private fun initObservers() {
-        button.setOnClickListener {
-            viewModel.getToRecentDoctorList()
-        }
         viewModel.recentDoctors.observe(viewLifecycleOwner, Observer {
             Timber.tag("ASDF").e("SIZE: ${it.size}")
             recentDoctorsAdapter.submitList(it)
