@@ -1,19 +1,27 @@
 package dev.sunnat629.vivydoctors.ui.main
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.android.support.DaggerFragment
 import dev.sunnat629.vivydoctors.R
 import dev.sunnat629.vivydoctors.data.utils.Status
 import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsEntity
-import dev.sunnat629.vivydoctors.ui.base.BaseFragment
 import dev.sunnat629.vivydoctors.ui.main.adapters.DoctorsAdapter
 import dev.sunnat629.vivydoctors.ui.utils.showIf
 import kotlinx.android.synthetic.main.fragment_doctors.*
 import timber.log.Timber
+import javax.inject.Inject
 
+class DoctorListFragment : DaggerFragment() {
 
-class DoctorListFragment : BaseFragment<MainViewModel>() {
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val doctorsAdapter by lazy {
         DoctorsAdapter { singleDoctor ->
@@ -21,21 +29,25 @@ class DoctorListFragment : BaseFragment<MainViewModel>() {
         }
     }
 
-    override val layoutResId: Int = R.layout.fragment_doctors
+    private lateinit var viewModel: MainViewModel
 
-    override val screenName: String? = DoctorListFragment::class.java.simpleName
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_doctors, container, false)
+    }
 
-    override fun getViewModel(): Class<MainViewModel> = MainViewModel::class.java
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(activity!!, viewModelFactory).get(MainViewModel::class.java)
+        onInitialize()
+    }
 
-    override fun onInitialize(instance: Bundle?, viewModel: MainViewModel) {
-        initUI()
+    private fun onInitialize() {
         initRecyclerView()
         initObservers()
     }
-
-    private fun initUI() {
-    }
-
 
     private fun initRecyclerView() {
         doctorRecyclerView.apply {
@@ -52,14 +64,15 @@ class DoctorListFragment : BaseFragment<MainViewModel>() {
         viewModel.getInitialLoad().observe(viewLifecycleOwner, Observer {
             if (it.status == Status.LOADING) {
                 shimmerViewContainer.startShimmer()
-            }
-            else shimmerViewContainer.hideShimmer()
+            } else shimmerViewContainer.hideShimmer()
         })
 
         viewModel.doctorsList.observe(viewLifecycleOwner, Observer {
-
-            doctorsAdapter.currentList
             doctorsAdapter.submitList(it)
+        })
+
+        viewModel.recentDoctors.observe(viewLifecycleOwner, Observer {
+            Timber.tag("ASDF").e("SIZE: ${it.size}")
         })
     }
 
@@ -74,6 +87,6 @@ class DoctorListFragment : BaseFragment<MainViewModel>() {
     }
 
     private fun onDoctorClick(singleDoctor: DoctorsEntity) {
-        Timber.tag("ASDF").d(singleDoctor.toString())
+        viewModel.addToRecentDoctorList(singleDoctor)
     }
 }

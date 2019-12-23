@@ -16,9 +16,14 @@ import kotlinx.android.synthetic.main.vh_doctor_list.view.*
  *
  * @param itemView is the view of a single Doctor in the RecyclerView
  * */
-class DoctorsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class DoctorsViewHolder(
+    itemView: View
+) : RecyclerView.ViewHolder(itemView) {
 
-    fun bindTo(doctorsEntity: DoctorsEntity?) {
+    fun bindTo(
+        doctorsEntity: DoctorsEntity?,
+        onDoctorClick: (singleDoctor: DoctorsEntity) -> Unit
+    ) {
 
         doctorsEntity?.apply {
             itemView.doctorName.text = name
@@ -32,13 +37,16 @@ class DoctorsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 .load(photoId)
                 .placeholder(R.drawable.ic_perm_identity)
                 .into(itemView.doctorPhoto)
+
+            itemView.doctorRoot.setOnClickListener {
+                onDoctorClick.invoke(this)
+            }
         }
     }
 
     companion object {
         fun create(
-            parent: ViewGroup,
-            onDoctorClick: (singleDoctor: DoctorsEntity) -> Unit
+            parent: ViewGroup
         ): DoctorsViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val view = layoutInflater.inflate(R.layout.vh_doctor_list, parent, false)

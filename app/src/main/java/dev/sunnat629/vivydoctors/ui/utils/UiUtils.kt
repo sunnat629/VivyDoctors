@@ -7,6 +7,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 
 
 fun Context.toast(message: CharSequence) =
@@ -69,4 +70,10 @@ fun CharSequence?.isNotNullOrEmpty(): Boolean {
 
 fun <T> List<T>.isNotNullOrEmpty(): Boolean {
     return this.isNullOrEmpty().not()
+}
+
+operator fun <T> MutableLiveData<List<T>>.plusAssign(values: List<T>) {
+    val value = this.value?.toMutableList() ?: mutableListOf()
+    value.addAll(values)
+    this.value = value
 }

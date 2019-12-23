@@ -3,6 +3,7 @@ package dev.sunnat629.vivydoctors.ui.main.adapters
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsEntity
 import java.util.*
@@ -10,11 +11,11 @@ import java.util.*
 /**
  * DoctorsAdapter.kt
  * This is a PagedListAdapter which will show in a RecyclerView using two ViewHolders
- * @see DoctorsAdapter for more details
+ * @see RecentDoctorsAdapter for more details
  * */
-class DoctorsAdapter(
+class RecentDoctorsAdapter(
     private val onDoctorClick: (singleDoctor: DoctorsEntity) -> Unit
-) : PagedListAdapter<DoctorsEntity, RecyclerView.ViewHolder>(DiffCallback) {
+) : ListAdapter<DoctorsEntity, RecyclerView.ViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return DoctorsViewHolder.create(
