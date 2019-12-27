@@ -73,9 +73,10 @@ fun <T> List<T>.isNotNullOrEmpty(): Boolean {
 }
 
 operator fun <T> MutableLiveData<List<T>>.plusAssign(values: T) {
-    val value = this.value?.toMutableList() ?: mutableListOf()
-    if (!value.contains(values)) {
-        value.add(values)
-        this.value = value
-    }
+    val list = this.value?.toMutableList() ?: mutableListOf()
+
+    list.reverse()
+    list.remove(values)
+    list.add(values)
+    this.value = list.takeLast(3).asReversed()
 }
