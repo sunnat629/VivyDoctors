@@ -24,5 +24,6 @@ enum class Status {
     LOADING,
     LOADED,
     FAILED,
-    NO_INTERNET
+    NO_INTERNET,
+    LIMITS
 }

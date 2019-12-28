@@ -117,6 +117,10 @@ class DoctorsDataSource(
                     }
                     _initialLoad.postValue(ERROR(status = Status.NO_INTERNET, message = "No Internet Available"))
                 }
+
+                is NetworkResult.Limits -> {
+                    _networkState.postValue(ERROR(status = Status.LIMITS, message = "No More Doctor Found"))
+                }
             }
         }
     }
@@ -157,7 +161,11 @@ class DoctorsDataSource(
                     retry = {
                         loadAfter(params, callback)
                     }
-                    _networkState.postValue(ERROR(status = Status.NO_INTERNET, message = result.message))
+                    _networkState.postValue(ERROR(status = Status.NO_INTERNET, message = "No Internet Available"))
+                }
+
+                is NetworkResult.Limits -> {
+                    _networkState.postValue(ERROR(status = Status.LIMITS, message = "No More Doctor Found"))
                 }
             }
         }

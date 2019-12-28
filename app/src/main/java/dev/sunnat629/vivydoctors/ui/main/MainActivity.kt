@@ -46,7 +46,7 @@ class MainActivity : BaseActivity<MainViewModel>(),
             when (it.status) {
                 Status.LOADING, Status.LOADED -> {
                 }
-                Status.FAILED, Status.NO_INTERNET -> showError(it.message)
+                Status.FAILED, Status.NO_INTERNET, Status.LIMITS -> showError(it.message)
             }
         })
 
@@ -55,7 +55,7 @@ class MainActivity : BaseActivity<MainViewModel>(),
             when (it.status) {
                 Status.LOADING, Status.LOADED -> {
                 }
-                Status.FAILED, Status.NO_INTERNET -> showError(it.message)
+                Status.FAILED, Status.NO_INTERNET, Status.LIMITS -> showError(it.message)
             }
         })
     }

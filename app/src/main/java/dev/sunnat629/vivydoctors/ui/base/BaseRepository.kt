@@ -37,8 +37,9 @@ open class BaseRepository {
             }
         } catch (ioException: IOException) {
             Timber.tag(BASE_REPOSITORY).e("ioException: ${ioException.message}")
-
-            NetworkResult.NoInternet("${ioException.message}")  // If the internet connection is no available, it will return NetworkResult.NoInternet with the ioException message
+            if (ioException.message?.contains("JsonReader")!!) {
+                NetworkResult.Limits("${ioException.message}")  // If there is no data found, mentions that the application exceeds its limit
+            } else NetworkResult.NoInternet("${ioException.message}")  // If the internet connection is no available, it will return NetworkResult.NoInternet with the ioException message
         }
     }
 }

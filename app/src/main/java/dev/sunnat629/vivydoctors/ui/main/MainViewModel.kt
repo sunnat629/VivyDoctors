@@ -81,11 +81,6 @@ class MainViewModel @Inject constructor(
         dataSourceFactory.paginationDataSourceLiveData.value?.invalidate()
     }
 
-    fun getToRecentDoctorList() {
-        Timber.tag("ASDF")
-            .d("recentDoctors: ${_recentDoctors.value?.size} || ${recentDoctors.value?.size}")
-    }
-
     fun addToRecentDoctorList(selectedDoctor: DoctorsEntity) {
         _selectedDoctors.postValue(selectedDoctor)
         _recentDoctors.plusAssign(selectedDoctor)
