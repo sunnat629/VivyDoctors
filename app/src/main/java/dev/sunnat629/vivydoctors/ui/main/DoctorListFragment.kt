@@ -1,6 +1,9 @@
 package dev.sunnat629.vivydoctors.ui.main
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +31,21 @@ class DoctorListFragment : BaseFragment<MainViewModel, MainActivity>() {
     override fun getViewModel(): Class<MainViewModel> = MainViewModel::class.java
 
     override fun getParentActivity(): MainActivity = (activity as MainActivity)
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.list_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.searchDoctors -> {
+                    findNavController().navigate(R.id.action_doctorListFragment_to_doctorSearchFragment)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
     override fun onInitialize(instance: Bundle?) {
         initToolbar()

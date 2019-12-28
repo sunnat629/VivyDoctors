@@ -2,9 +2,11 @@
     <string name="app_name">Vivy Doctors</string>
 
     <string name="nav_all_doctor">Vivy Doctors</string>
+    <string name="nav_search_label">Search Doctors</string>
     <string name="nav_recent_doctors">Recent Doctors</string>
     <string name="retry">Retry</string>
     <string name="no_recent_doctors">No Recent Doctors</string>
+    <string name="no_doctor_found">No Doctor Found</string>
     <string name="name">Name</string>
     <string name="address">Address</string>
     <string name="email">Email</string>

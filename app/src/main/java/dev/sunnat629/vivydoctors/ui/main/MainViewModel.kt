@@ -12,7 +12,7 @@ import dev.sunnat629.vivydoctors.ui.datasource.DataSourceFactory
 import dev.sunnat629.vivydoctors.ui.utils.DSConstants.INITIAL_LOAD_SIZE
 import dev.sunnat629.vivydoctors.ui.utils.DSConstants.PAGE_SIZE
 import dev.sunnat629.vivydoctors.ui.utils.plusAssign
-import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
@@ -37,8 +37,11 @@ class MainViewModel @Inject constructor(
     private val _recentDoctors = MutableLiveData<List<DoctorsEntity>>()
     val recentDoctors: LiveData<List<DoctorsEntity>> = _recentDoctors
 
-    private val _selectedDoctors = MutableLiveData<DoctorsEntity>()
-    val selectedDoctors: LiveData<DoctorsEntity> = _selectedDoctors
+    private val _selectedDoctor = MutableLiveData<DoctorsEntity>()
+    val selectedDoctor: LiveData<DoctorsEntity> = _selectedDoctor
+
+    private val _searchedDoctors = MutableLiveData<List<DoctorsEntity>>()
+    val searchedDoctors: LiveData<List<DoctorsEntity>> = _searchedDoctors
 
     /**
      * initialize the viewModel where we inject the component and retrieve the doctor data using
@@ -82,7 +85,27 @@ class MainViewModel @Inject constructor(
     }
 
     fun addToRecentDoctorList(selectedDoctor: DoctorsEntity) {
-        _selectedDoctors.postValue(selectedDoctor)
+        _selectedDoctor.postValue(selectedDoctor)
         _recentDoctors.plusAssign(selectedDoctor)
+    }
+
+    fun setQuery(originalInput: String) {
+        val modifiedInput = originalInput.toLowerCase(Locale.getDefault())
+        val searchedDoctorsByName: MutableList<DoctorsEntity> = mutableListOf()
+        doctorsList.value?.map { singleDoctor ->
+            singleDoctor.name?.let {
+                if (it.contains(modifiedInput)) {
+                    searchedDoctorsByName.add(singleDoctor)
+                }
+            }
+        }
+        _searchedDoctors.postValue(searchedDoctorsByName)
+    }
+
+    fun getAllDoctorsForSearch() {
+        _searchedDoctors.postValue(doctorsList.value)
+    }
+    fun resetSearch() {
+        _searchedDoctors.postValue(emptyList())
     }
 }
