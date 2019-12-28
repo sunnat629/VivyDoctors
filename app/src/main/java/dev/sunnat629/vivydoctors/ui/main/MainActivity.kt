@@ -77,4 +77,16 @@ class MainActivity : BaseActivity<MainViewModel>(),
             else -> false
         }
     }
+
+    override fun onBackPressed() {
+        when (navController.currentDestination?.id) {
+            R.id.doctorListFragment -> finish()
+            R.id.recentDoctorsFragment -> {
+                navController.popBackStack()
+                navController.navigate(R.id.doctorListFragment)
+            }
+
+            else -> super.onBackPressed()
+        }
+    }
 }

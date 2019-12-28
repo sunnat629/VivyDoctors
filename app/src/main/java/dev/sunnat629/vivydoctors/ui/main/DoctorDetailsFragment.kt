@@ -34,7 +34,7 @@ class DoctorDetailsFragment : BaseFragment<MainViewModel, MainActivity>() {
         getBaseToolbar()?.let {
             it.setNavigationOnClickListener {
                 findNavController().popBackStack()
-                activity?.onBackPressed()
+                findNavController().currentDestination
             }
         }
     }

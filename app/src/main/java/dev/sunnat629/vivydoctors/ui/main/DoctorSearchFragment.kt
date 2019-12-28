@@ -12,7 +12,7 @@ import dev.sunnat629.vivydoctors.ui.main.adapters.DoctorsAdapter
 import dev.sunnat629.vivydoctors.ui.utils.showIf
 import kotlinx.android.synthetic.main.fragment_doctors.*
 
-class DoctorListFragment : BaseFragment<MainViewModel, MainActivity>() {
+class DoctorSearchFragment : BaseFragment<MainViewModel, MainActivity>() {
 
     private val doctorsAdapter by lazy {
         DoctorsAdapter { singleDoctor ->
@@ -20,7 +20,7 @@ class DoctorListFragment : BaseFragment<MainViewModel, MainActivity>() {
         }
     }
 
-    override val layoutResId: Int = R.layout.fragment_doctors
+    override val layoutResId: Int = R.layout.fragment_doctors_search
 
     override val screenName: String? =
         context?.resources?.getString(R.string.nav_all_doctor) ?: String()
@@ -36,7 +36,6 @@ class DoctorListFragment : BaseFragment<MainViewModel, MainActivity>() {
     }
 
     private fun initToolbar() {
-        setHasOptionsMenu(true)
         setupBaseToolbar()
         showToolbarNavBack(false)
     }

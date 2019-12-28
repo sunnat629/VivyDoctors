@@ -12,6 +12,18 @@
         <action
             android:id="@+id/action_doctorListFragment_to_doctorDetailsFragment"
             app:destination="@id/doctorDetailsFragment" />
+        <action
+            android:id="@+id/action_doctorListFragment_to_doctorSearchFragment"
+            app:destination="@id/doctorSearchFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/doctorSearchFragment"
+        android:name="dev.sunnat629.vivydoctors.ui.main.DoctorSearchFragment"
+        tools:layout="@layout/fragment_doctors">
+        <action
+            android:id="@+id/action_doctorSearchFragment_to_doctorListFragment"
+            app:destination="@id/doctorListFragment" />
     </fragment>
 
     <fragment
@@ -26,5 +38,9 @@
     <fragment
         android:id="@+id/doctorDetailsFragment"
         android:name="dev.sunnat629.vivydoctors.ui.main.DoctorDetailsFragment"
-        tools:layout="@layout/fragment_doctor_details"/>
+        tools:layout="@layout/fragment_doctor_details">
+        <action
+            android:id="@+id/action_doctorDetailsFragment_to_doctorListFragment"
+            app:destination="@id/doctorListFragment" />
+    </fragment>
 </navigation>
