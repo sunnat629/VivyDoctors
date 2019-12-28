@@ -4,18 +4,16 @@
     <string name="nav_all_doctor">Vivy Doctors</string>
     <string name="nav_search_label">Search Doctors</string>
     <string name="nav_recent_doctors">Recent Doctors</string>
-    <string name="retry">Retry</string>
+
     <string name="no_recent_doctors">No Recent Doctors</string>
     <string name="no_doctor_found">No Doctor Found</string>
-    <string name="name">Name</string>
-    <string name="address">Address</string>
-    <string name="email">Email</string>
-    <string name="phone">Phone</string>
-    <string name="appointment_time">Appointment Time</string>
-    <string name="website">Website</string>
+    <string name="name_label">Name</string>
+    <string name="address_label">Address</string>
+    <string name="email_label">Email</string>
+    <string name="phone_label">Phone</string>
+    <string name="website_label">Website</string>
     <string name="ok">OK</string>
     <string name="error_label">Error</string>
     <string name="no_network">No Internet Connection</string>
-    <string name="button_retry">Retry</string>
     <string name="search_label">Search</string>
 </resources>

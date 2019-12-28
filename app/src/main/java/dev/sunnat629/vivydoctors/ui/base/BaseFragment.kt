@@ -17,6 +17,10 @@ import kotlinx.android.synthetic.main.fragment_base.*
 import kotlinx.android.synthetic.main.fragment_base.view.*
 import javax.inject.Inject
 
+/**
+ * This is an abstract base class for every fragments and it is injected fragment and also
+ * initialized the viewModel and other fragment related field.
+ * */
 abstract class BaseFragment<M : BaseViewModel, C : AppCompatActivity> : DaggerFragment() {
 
     @Inject
