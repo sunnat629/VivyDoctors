@@ -18,7 +18,7 @@ data class DoctorsModel(
     var specialityIds: List<Int>?,
     var source: String?,
     var phoneNumber: String?,
-    var email: Any?,
+    var email: String?,
     var website: String?,
     var openingHours: List<String>?,
     var integration: Any?,

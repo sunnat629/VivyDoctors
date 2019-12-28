@@ -1,29 +1,20 @@
 package dev.sunnat629.vivydoctors.ui.main
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import dagger.android.support.DaggerFragment
 import dev.sunnat629.vivydoctors.R
 import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsEntity
+import dev.sunnat629.vivydoctors.ui.base.BaseFragment
 import dev.sunnat629.vivydoctors.ui.main.adapters.RecentDoctorsAdapter
 import dev.sunnat629.vivydoctors.ui.utils.showIf
 import kotlinx.android.synthetic.main.fragment_recent_doctor.*
 import timber.log.Timber
-import javax.inject.Inject
 
-class RecentDoctorsFragment : DaggerFragment() {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private lateinit var viewModel: MainViewModel
+class RecentDoctorsFragment : BaseFragment<MainViewModel, MainActivity>() {
 
     private val recentDoctorsAdapter by lazy {
         RecentDoctorsAdapter { singleDoctor ->
@@ -31,22 +22,16 @@ class RecentDoctorsFragment : DaggerFragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_recent_doctor, container, false)
-    }
+    override val layoutResId: Int = R.layout.fragment_recent_doctor
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel =
-            ViewModelProviders.of(activity!!, viewModelFactory).get(MainViewModel::class.java)
-        onInitialize()
-    }
+    override val screenName: String? =
+        context?.resources?.getString(R.string.nav_recent_doctors) ?: String()
 
+    override fun getViewModel(): Class<MainViewModel> = MainViewModel::class.java
 
-    private fun onInitialize() {
+    override fun getParentActivity(): AppCompatActivity = (activity as MainActivity)
+
+    override fun onInitialize(instance: Bundle?, viewModel: MainViewModel) {
         initRecyclerView()
         initObservers()
     }
@@ -67,7 +52,9 @@ class RecentDoctorsFragment : DaggerFragment() {
         })
     }
 
+
     private fun onDoctorClick(singleDoctor: DoctorsEntity) {
-        Timber.tag("ASDF").d(singleDoctor.toString())
+        findNavController().navigate(R.id.action_recentDoctorsFragment_to_doctorDetailsFragment)
+        viewModel.addToRecentDoctorList(singleDoctor)
     }
 }

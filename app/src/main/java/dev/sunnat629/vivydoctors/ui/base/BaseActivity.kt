@@ -7,12 +7,12 @@ import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
 
-abstract class BaseActivity<M : BaseViewModel> : DaggerAppCompatActivity() {
+abstract class BaseActivity<MV : BaseViewModel> : DaggerAppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    lateinit var viewModel: M
+    lateinit var viewModel: MV
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,10 +21,10 @@ abstract class BaseActivity<M : BaseViewModel> : DaggerAppCompatActivity() {
         onInitialize(savedInstanceState, viewModel)
     }
 
-    protected abstract fun getViewModel(): Class<M>
+    protected abstract fun getViewModel(): Class<MV>
 
     /** Abstract method to supply ViewModel instance into subclass through parameter after onCreate() call*/
-    protected abstract fun onInitialize(instance: Bundle?, viewModel: M)
+    protected abstract fun onInitialize(instance: Bundle?, viewModel: MV)
 
     @get:LayoutRes
     protected abstract val layoutResId: Int

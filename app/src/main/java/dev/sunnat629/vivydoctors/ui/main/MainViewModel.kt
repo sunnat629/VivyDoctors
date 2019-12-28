@@ -3,7 +3,6 @@ package dev.sunnat629.vivydoctors.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import dev.sunnat629.vivydoctors.data.utils.NetworkState
@@ -37,6 +36,9 @@ class MainViewModel @Inject constructor(
 
     private val _recentDoctors = MutableLiveData<List<DoctorsEntity>>()
     val recentDoctors: LiveData<List<DoctorsEntity>> = _recentDoctors
+
+    private val _selectedDoctors = MutableLiveData<DoctorsEntity>()
+    val selectedDoctors: LiveData<DoctorsEntity> = _selectedDoctors
 
     /**
      * initialize the viewModel where we inject the component and retrieve the doctor data using
@@ -84,7 +86,8 @@ class MainViewModel @Inject constructor(
             .d("recentDoctors: ${_recentDoctors.value?.size} || ${recentDoctors.value?.size}")
     }
 
-    fun addToRecentDoctorList(singleDoctor: DoctorsEntity) {
-        _recentDoctors.plusAssign(singleDoctor)
+    fun addToRecentDoctorList(selectedDoctor: DoctorsEntity) {
+        _selectedDoctors.postValue(selectedDoctor)
+        _recentDoctors.plusAssign(selectedDoctor)
     }
 }
