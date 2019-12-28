@@ -12,7 +12,7 @@ data class NetworkState(
     companion object {
         val LOADED = NetworkState(Status.LOADED)
         val LOADING = NetworkState(Status.LOADING)
-        fun ERROR(message: String?) = NetworkState(Status.FAILED, message)
+        fun ERROR(status: Status, message: String?) = NetworkState(status, message)
     }
 }
 
@@ -23,5 +23,6 @@ data class NetworkState(
 enum class Status {
     LOADING,
     LOADED,
-    FAILED
+    FAILED,
+    NO_INTERNET
 }

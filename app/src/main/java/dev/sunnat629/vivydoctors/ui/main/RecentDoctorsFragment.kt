@@ -31,9 +31,15 @@ class RecentDoctorsFragment : BaseFragment<MainViewModel, MainActivity>() {
 
     override fun getParentActivity(): AppCompatActivity = (activity as MainActivity)
 
-    override fun onInitialize(instance: Bundle?, viewModel: MainViewModel) {
+    override fun onInitialize(instance: Bundle?) {
+        initToolbar()
         initRecyclerView()
         initObservers()
+    }
+
+    private fun initToolbar() {
+        setupBaseToolbar()
+        showToolbarNavBack(false)
     }
 
     private fun initRecyclerView() {

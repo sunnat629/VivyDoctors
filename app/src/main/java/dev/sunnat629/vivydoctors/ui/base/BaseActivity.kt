@@ -2,8 +2,10 @@ package dev.sunnat629.vivydoctors.ui.base
 
 import android.os.Bundle
 import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.support.DaggerAppCompatActivity
+import dev.sunnat629.vivydoctors.R
 import javax.inject.Inject
 
 
@@ -34,5 +36,18 @@ abstract class BaseActivity<MV : BaseViewModel> : DaggerAppCompatActivity() {
     private fun setLayout(layoutResID: Int) {
         setContentView(layoutResID)
 
+    }
+
+    fun showError(message: String?) {
+        val builder = AlertDialog.Builder(this)
+        builder.apply {
+            setCancelable(false)
+            setMessage(message)
+            setTitle(R.string.error_label)
+            setPositiveButton(R.string.ok) { alert, _ ->
+                alert.dismiss()
+            }
+        }
+        builder.create().show()
     }
 }

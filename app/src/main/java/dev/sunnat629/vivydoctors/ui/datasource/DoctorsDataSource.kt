@@ -9,6 +9,7 @@ import dev.sunnat629.vivydoctors.data.utils.NetworkState
 import dev.sunnat629.vivydoctors.data.utils.NetworkState.Companion.ERROR
 import dev.sunnat629.vivydoctors.data.utils.NetworkState.Companion.LOADED
 import dev.sunnat629.vivydoctors.data.utils.NetworkState.Companion.LOADING
+import dev.sunnat629.vivydoctors.data.utils.Status
 import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsEntity
 import dev.sunnat629.vivydoctors.ui.utils.DSConstants.FIRST_PAGE
 import dev.sunnat629.vivydoctors.ui.utils.LoggingTags.DATA_S_FACTORY
@@ -107,14 +108,14 @@ class DoctorsDataSource(
                     retry = {
                         loadInitial(params, callback)
                     }
-                    _initialLoad.postValue(ERROR(result.exception))
+                    _initialLoad.postValue(ERROR(status = Status.FAILED, message = result.exception))
                 }
 
                 is NetworkResult.NoInternet -> {
                     retry = {
                         loadInitial(params, callback)
                     }
-                    _initialLoad.postValue(ERROR(result.message))
+                    _initialLoad.postValue(ERROR(status = Status.NO_INTERNET, message = "No Internet Available"))
                 }
             }
         }
@@ -149,14 +150,14 @@ class DoctorsDataSource(
                     retry = {
                         loadAfter(params, callback)
                     }
-                    _networkState.postValue(ERROR(result.exception))
+                    _networkState.postValue(ERROR(status = Status.FAILED, message = result.exception))
                 }
 
                 is NetworkResult.NoInternet -> {
                     retry = {
                         loadAfter(params, callback)
                     }
-                    _networkState.postValue(ERROR(result.message))
+                    _networkState.postValue(ERROR(status = Status.NO_INTERNET, message = result.message))
                 }
             }
         }

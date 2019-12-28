@@ -22,13 +22,20 @@ class DoctorDetailsFragment : BaseFragment<MainViewModel, MainActivity>() {
 
     override fun getParentActivity(): AppCompatActivity = (activity as MainActivity)
 
-    override fun onInitialize(instance: Bundle?, viewModel: MainViewModel) {
+    override fun onInitialize(instance: Bundle?) {
         initToolbar()
         initObservers()
     }
 
     private fun initToolbar() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        setupBaseToolbar()
+        showToolbarNavBack(true)
+        getBaseToolbar()?.let {
+            it.setNavigationOnClickListener {
+                fragmentManager?.popBackStack()
+                activity?.onBackPressed()
+            }
+        }
     }
 
     private fun initUI(selectedDoctor: DoctorsEntity?) {
@@ -53,11 +60,6 @@ class DoctorDetailsFragment : BaseFragment<MainViewModel, MainActivity>() {
     }
 
     private fun initObservers() {
-        viewModel.getNetworkState().observe(viewLifecycleOwner, Observer {
-            // todo
-        })
-
-
         viewModel.selectedDoctors.observe(viewLifecycleOwner, Observer { selectedDoctor ->
             initUI(selectedDoctor)
         })

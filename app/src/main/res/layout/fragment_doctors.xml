@@ -5,23 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmerViewContainer"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/doctorRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/loadingProgressBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:shimmer_duration="1000">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/doctorRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/vh_doctor_list" />
-
-    </com.facebook.shimmer.ShimmerFrameLayout>
+        tools:listitem="@layout/vh_doctor_list" />
 
     <ProgressBar
         android:id="@+id/loadingProgressBar"

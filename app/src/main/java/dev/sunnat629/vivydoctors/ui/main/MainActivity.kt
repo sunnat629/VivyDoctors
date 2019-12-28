@@ -8,7 +8,9 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.sunnat629.vivydoctors.R
+import dev.sunnat629.vivydoctors.data.utils.Status
 import dev.sunnat629.vivydoctors.ui.base.BaseActivity
+import dev.sunnat629.vivydoctors.ui.utils.LoggingTags.MAIN_ACTIVITY
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_toolbar.*
 import timber.log.Timber
@@ -25,18 +27,8 @@ class MainActivity : BaseActivity<MainViewModel>(),
     override fun getViewModel(): Class<MainViewModel> = MainViewModel::class.java
 
     override fun onInitialize(instance: Bundle?, viewModel: MainViewModel) {
-        initToolbar()
         initNavControl()
         initObservers()
-    }
-
-    private fun initToolbar() {
-        toolbar.apply {
-            title = resources.getString(R.string.app_name)
-            setNavigationOnClickListener {
-                finish()
-            }
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -51,26 +43,30 @@ class MainActivity : BaseActivity<MainViewModel>(),
 
     private fun initObservers() {
         viewModel.getNetworkState().observe(this, Observer {
+            when(it.status){
+                Status.LOADING, Status.LOADED -> {}
+                Status.FAILED, Status.NO_INTERNET -> showError(it.message)
+            }
         })
 
         viewModel.getInitialLoad().observe(this, Observer {
+            when(it.status){
+                Status.LOADING, Status.LOADED -> {}
+                Status.FAILED, Status.NO_INTERNET -> showError(it.message)
+            }
         })
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.doctorListFragment -> {
+                Timber.tag(MAIN_ACTIVITY).d("doctorListFragment")
                 navController.navigate(R.id.doctorListFragment)
                 true
             }
             R.id.recentDoctorsFragment -> {
                 navController.navigate(R.id.recentDoctorsFragment)
-                Timber.tag("ASDF").d("recentDoctorsFragment")
-                true
-            }
-
-            R.id.doctorDetailsFragment -> {
-                navController.navigate(R.id.doctorDetailsFragment)
+                Timber.tag(MAIN_ACTIVITY).d("recentDoctorsFragment")
                 true
             }
             else -> false

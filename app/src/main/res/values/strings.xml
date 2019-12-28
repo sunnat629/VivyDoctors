@@ -11,4 +11,6 @@
     <string name="phone">Phone</string>
     <string name="appointment_time">Appointment Time</string>
     <string name="website">Website</string>
+    <string name="ok">OK</string>
+    <string name="error_label">Error</string>
 </resources>
