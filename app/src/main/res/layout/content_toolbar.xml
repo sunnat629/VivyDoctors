@@ -8,15 +8,17 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:backgroundTint="@color/colorPrimary"
+        android:background="@android:color/white"
+        android:backgroundTint="@android:color/white"
         app:contentInsetStartWithNavigation="0dp"
         app:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
-        app:titleTextColor="@android:color/white"
+        app:titleTextColor="@color/colorPrimaryDark"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="@string/app_name"
         app:titleMarginStart="0dp"
         app:contentInsetEnd="0dp"/>
 

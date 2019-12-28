@@ -29,9 +29,16 @@ class DoctorListFragment : BaseFragment<MainViewModel, MainActivity>() {
 
     override fun getParentActivity(): MainActivity = (activity as MainActivity)
 
-    override fun onInitialize(instance: Bundle?, viewModel: MainViewModel) {
+    override fun onInitialize(instance: Bundle?) {
+        initToolbar()
         initRecyclerView()
         initObservers()
+    }
+
+    private fun initToolbar() {
+        setHasOptionsMenu(true)
+        setupBaseToolbar()
+        showToolbarNavBack(false)
     }
 
 
@@ -47,25 +54,9 @@ class DoctorListFragment : BaseFragment<MainViewModel, MainActivity>() {
             loadingProgressBar.showIf(it.status == Status.LOADING)
         })
 
-        viewModel.getInitialLoad().observe(viewLifecycleOwner, Observer {
-            if (it.status == Status.LOADING) {
-                shimmerViewContainer.startShimmer()
-            } else shimmerViewContainer.hideShimmer()
-        })
-
         viewModel.doctorsList.observe(viewLifecycleOwner, Observer {
             doctorsAdapter.submitList(it)
         })
-    }
-
-    override fun onResume() {
-        super.onResume()
-        shimmerViewContainer.startShimmer()
-    }
-
-    override fun onPause() {
-        shimmerViewContainer.stopShimmer()
-        super.onPause()
     }
 
     private fun onDoctorClick(singleDoctor: DoctorsEntity) {

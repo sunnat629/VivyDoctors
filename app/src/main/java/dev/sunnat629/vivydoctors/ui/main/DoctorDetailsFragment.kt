@@ -3,6 +3,7 @@ package dev.sunnat629.vivydoctors.ui.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import dev.sunnat629.vivydoctors.R
@@ -22,13 +23,20 @@ class DoctorDetailsFragment : BaseFragment<MainViewModel, MainActivity>() {
 
     override fun getParentActivity(): AppCompatActivity = (activity as MainActivity)
 
-    override fun onInitialize(instance: Bundle?, viewModel: MainViewModel) {
+    override fun onInitialize(instance: Bundle?) {
         initToolbar()
         initObservers()
     }
 
     private fun initToolbar() {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        setupBaseToolbar()
+        showToolbarNavBack(true)
+        getBaseToolbar()?.let {
+            it.setNavigationOnClickListener {
+                findNavController().popBackStack()
+                findNavController().currentDestination
+            }
+        }
     }
 
     private fun initUI(selectedDoctor: DoctorsEntity?) {
@@ -38,6 +46,7 @@ class DoctorDetailsFragment : BaseFragment<MainViewModel, MainActivity>() {
             doctorAddress.text = address
             doctorEmail.text = email
             doctorPhone.text = phoneNumber
+            doctorWebsite.text = website
             review.text = reviewCount?.toString() ?: "0"
             ratingBar.rating = rating?.toFloat() ?: 0f
 
@@ -53,11 +62,6 @@ class DoctorDetailsFragment : BaseFragment<MainViewModel, MainActivity>() {
     }
 
     private fun initObservers() {
-        viewModel.getNetworkState().observe(viewLifecycleOwner, Observer {
-            // todo
-        })
-
-
         viewModel.selectedDoctors.observe(viewLifecycleOwner, Observer { selectedDoctor ->
             initUI(selectedDoctor)
         })

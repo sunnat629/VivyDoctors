@@ -11,4 +11,9 @@
     <string name="phone">Phone</string>
     <string name="appointment_time">Appointment Time</string>
     <string name="website">Website</string>
+    <string name="ok">OK</string>
+    <string name="error_label">Error</string>
+    <string name="no_network">No Internet Connection</string>
+    <string name="button_retry">Retry</string>
+    <string name="search_label">Search</string>
 </resources>

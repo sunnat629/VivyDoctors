@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.support.DaggerFragment
 import dev.sunnat629.vivydoctors.R
-import dev.sunnat629.vivydoctors.ui.main.MainActivity
+import kotlinx.android.synthetic.main.content_toolbar.*
 import kotlinx.android.synthetic.main.fragment_base.view.*
 import javax.inject.Inject
 
@@ -20,7 +23,9 @@ abstract class BaseFragment<M : BaseViewModel, C : AppCompatActivity> : DaggerFr
 
     protected lateinit var viewModel: M
 
-    protected lateinit var fragmentContainer: View
+    private lateinit var fragmentContainer: View
+
+    private var actionBar: ActionBar? = null
 
     @get:LayoutRes
     protected abstract val layoutResId: Int
@@ -32,7 +37,7 @@ abstract class BaseFragment<M : BaseViewModel, C : AppCompatActivity> : DaggerFr
     protected abstract fun getParentActivity(): AppCompatActivity
 
     /** Abstract method to supply ViewModel instance into subclass through parameter after onCreate() call*/
-    protected abstract fun onInitialize(instance: Bundle?, viewModel: M)
+    protected abstract fun onInitialize(instance: Bundle?)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +46,7 @@ abstract class BaseFragment<M : BaseViewModel, C : AppCompatActivity> : DaggerFr
     ): View? {
         fragmentContainer = inflater.inflate(R.layout.fragment_base, null)
         layoutInflater
-            .inflate(layoutResId, fragmentContainer.fragment_content_frame)
+            .inflate(layoutResId, fragmentContainer.fragmentBaseContent)
         setHasOptionsMenu(true)
         return fragmentContainer
 
@@ -50,6 +55,29 @@ abstract class BaseFragment<M : BaseViewModel, C : AppCompatActivity> : DaggerFr
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(getParentActivity(), viewModelFactory).get(getViewModel())
-        onInitialize(savedInstanceState, viewModel)
+        onInitialize(savedInstanceState)
+    }
+
+    fun setupBaseToolbar() {
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+
+        (activity as AppCompatActivity).supportActionBar?.let {
+            actionBar = it
+        }
+    }
+
+    fun showToolbarTitle(title: String) {
+        actionBar?.let {
+            it.setDisplayShowTitleEnabled(true)
+            it.title = title
+        }
+    }
+
+    fun showToolbarNavBack(hasShown: Boolean) {
+        actionBar?.setDisplayHomeAsUpEnabled(hasShown)
+    }
+
+    fun getBaseToolbar(): Toolbar? {
+        return toolbar
     }
 }
