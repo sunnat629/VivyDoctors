@@ -50,8 +50,17 @@ fun Fragment.showKeyboard() {
     activity?.showKeyboard()
 }
 
+fun Fragment.showKeyboard(view: View) {
+    activity?.showKeyboard(view)
+}
 fun Activity.hideKeyboard() {
     if (currentFocus == null) View(this) else currentFocus?.let { hideKeyboard(it) }
+}
+
+
+private fun Context.showKeyboard(view: View) {
+    val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
 }
 
 private fun Context.hideKeyboard(view: View) {

@@ -20,10 +20,13 @@
     <fragment
         android:id="@+id/doctorSearchFragment"
         android:name="dev.sunnat629.vivydoctors.ui.main.DoctorSearchFragment"
-        tools:layout="@layout/fragment_doctors">
+        tools:layout="@layout/fragment_doctors_search">
         <action
             android:id="@+id/action_doctorSearchFragment_to_doctorListFragment"
             app:destination="@id/doctorListFragment" />
+        <action
+            android:id="@+id/action_doctorSearchFragment_to_doctorDetailsFragment"
+            app:destination="@id/doctorDetailsFragment" />
     </fragment>
 
     <fragment
@@ -33,6 +36,9 @@
         <action
             android:id="@+id/action_recentDoctorsFragment_to_doctorDetailsFragment"
             app:destination="@id/doctorDetailsFragment" />
+        <action
+            android:id="@+id/action_recentDoctorsFragment_to_doctorListFragment"
+            app:destination="@id/doctorListFragment" />
     </fragment>
 
     <fragment

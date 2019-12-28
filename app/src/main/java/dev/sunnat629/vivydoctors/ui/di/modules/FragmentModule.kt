@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dev.sunnat629.vivydoctors.ui.main.DoctorDetailsFragment
 import dev.sunnat629.vivydoctors.ui.main.DoctorListFragment
+import dev.sunnat629.vivydoctors.ui.main.DoctorSearchFragment
 import dev.sunnat629.vivydoctors.ui.main.RecentDoctorsFragment
 
 @Module
@@ -17,4 +18,7 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun recentDoctorsFragment(): RecentDoctorsFragment
+
+    @ContributesAndroidInjector
+    abstract fun doctorSearchFragment(): DoctorSearchFragment
 }

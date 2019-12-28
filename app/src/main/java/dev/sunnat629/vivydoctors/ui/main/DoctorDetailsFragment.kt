@@ -62,7 +62,7 @@ class DoctorDetailsFragment : BaseFragment<MainViewModel, MainActivity>() {
     }
 
     private fun initObservers() {
-        viewModel.selectedDoctors.observe(viewLifecycleOwner, Observer { selectedDoctor ->
+        viewModel.selectedDoctor.observe(viewLifecycleOwner, Observer { selectedDoctor ->
             initUI(selectedDoctor)
         })
     }

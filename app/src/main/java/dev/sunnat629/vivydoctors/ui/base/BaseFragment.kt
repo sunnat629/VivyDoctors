@@ -12,7 +12,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.support.DaggerFragment
 import dev.sunnat629.vivydoctors.R
+import dev.sunnat629.vivydoctors.ui.utils.gone
 import kotlinx.android.synthetic.main.content_toolbar.*
+import kotlinx.android.synthetic.main.fragment_base.*
 import kotlinx.android.synthetic.main.fragment_base.view.*
 import javax.inject.Inject
 
@@ -79,5 +81,9 @@ abstract class BaseFragment<M : BaseViewModel, C : AppCompatActivity> : DaggerFr
 
     fun getBaseToolbar(): Toolbar? {
         return toolbar
+    }
+
+    fun removeBaseToolbar() {
+        contentToolbar?.gone()
     }
 }
