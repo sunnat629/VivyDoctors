@@ -8,9 +8,8 @@
     <include
         android:id="@+id/contentToolbar"
         layout="@layout/content_toolbar"
-        tools:visibility="gone"
         android:layout_width="@dimen/size_0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

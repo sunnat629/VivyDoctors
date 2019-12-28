@@ -101,4 +101,11 @@ class MainViewModel @Inject constructor(
         }
         _searchedDoctors.postValue(searchedDoctorsByName)
     }
+
+    fun getAllDoctorsForSearch() {
+        _searchedDoctors.postValue(doctorsList.value)
+    }
+    fun resetSearch() {
+        _searchedDoctors.postValue(emptyList())
+    }
 }

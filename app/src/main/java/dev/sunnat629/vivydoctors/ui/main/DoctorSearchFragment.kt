@@ -45,7 +45,13 @@ class DoctorSearchFragment : BaseFragment<MainViewModel, MainActivity>() {
 
     override fun onPause() {
         super.onPause()
+        viewModel.resetSearch()
         hideKeyboard()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllDoctorsForSearch()
     }
 
     private fun initUI() {
@@ -76,25 +82,6 @@ class DoctorSearchFragment : BaseFragment<MainViewModel, MainActivity>() {
     }
 
     private fun initSearchInputListener() {
-        doctorSearchEditText.setOnEditorActionListener { view: View, actionId: Int, _: KeyEvent? ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                doSearch()
-                hideKeyboard()
-                true
-            } else {
-                false
-            }
-        }
-        doctorSearchEditText.setOnKeyListener { view: View, keyCode: Int, event: KeyEvent ->
-            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                doSearch()
-                hideKeyboard()
-                true
-            } else {
-                false
-            }
-        }
-
         doctorSearchEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
 
