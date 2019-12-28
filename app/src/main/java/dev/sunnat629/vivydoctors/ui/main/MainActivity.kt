@@ -13,7 +13,6 @@ import dev.sunnat629.vivydoctors.ui.base.BaseActivity
 import dev.sunnat629.vivydoctors.ui.utils.LoggingTags.MAIN_ACTIVITY
 import dev.sunnat629.vivydoctors.ui.utils.showIf
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_toolbar.*
 import timber.log.Timber
 
 class MainActivity : BaseActivity<MainViewModel>(),
@@ -44,16 +43,18 @@ class MainActivity : BaseActivity<MainViewModel>(),
 
     private fun initObservers() {
         viewModel.getNetworkState().observe(this, Observer {
-            when(it.status){
-                Status.LOADING, Status.LOADED -> {}
+            when (it.status) {
+                Status.LOADING, Status.LOADED -> {
+                }
                 Status.FAILED, Status.NO_INTERNET -> showError(it.message)
             }
         })
 
         viewModel.getInitialLoad().observe(this, Observer {
             networkLoadingProgressBar.showIf(it.status == Status.LOADING)
-            when(it.status){
-                Status.LOADING, Status.LOADED -> {}
+            when (it.status) {
+                Status.LOADING, Status.LOADED -> {
+                }
                 Status.FAILED, Status.NO_INTERNET -> showError(it.message)
             }
         })
@@ -63,10 +64,12 @@ class MainActivity : BaseActivity<MainViewModel>(),
         return when (item.itemId) {
             R.id.doctorListFragment -> {
                 Timber.tag(MAIN_ACTIVITY).d("doctorListFragment")
+                navController.popBackStack()
                 navController.navigate(R.id.doctorListFragment)
                 true
             }
             R.id.recentDoctorsFragment -> {
+                navController.popBackStack()
                 navController.navigate(R.id.recentDoctorsFragment)
                 Timber.tag(MAIN_ACTIVITY).d("recentDoctorsFragment")
                 true

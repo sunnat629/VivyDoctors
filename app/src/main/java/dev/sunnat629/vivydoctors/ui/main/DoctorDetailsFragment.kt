@@ -3,6 +3,7 @@ package dev.sunnat629.vivydoctors.ui.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import dev.sunnat629.vivydoctors.R
@@ -32,7 +33,7 @@ class DoctorDetailsFragment : BaseFragment<MainViewModel, MainActivity>() {
         showToolbarNavBack(true)
         getBaseToolbar()?.let {
             it.setNavigationOnClickListener {
-                fragmentManager?.popBackStack()
+                findNavController().popBackStack()
                 activity?.onBackPressed()
             }
         }
@@ -45,6 +46,7 @@ class DoctorDetailsFragment : BaseFragment<MainViewModel, MainActivity>() {
             doctorAddress.text = address
             doctorEmail.text = email
             doctorPhone.text = phoneNumber
+            doctorWebsite.text = website
             review.text = reviewCount?.toString() ?: "0"
             ratingBar.rating = rating?.toFloat() ?: 0f
 

@@ -26,13 +26,17 @@
 
         <TextView
             android:id="@+id/doctorName"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/size_0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
+            android:gravity="center|end"
             android:padding="8dp"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/nameTitle"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/name" />
         <!--    endregion naming-->
@@ -52,13 +56,16 @@
 
         <TextView
             android:id="@+id/doctorAddress"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/size_0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
+            android:gravity="center|end"
             android:padding="8dp"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/addressTitle"
             app:layout_constraintTop_toBottomOf="@+id/doctorName"
             tools:text="@string/address" />
         <!--    endregion doctorAddress-->
@@ -78,13 +85,16 @@
 
         <TextView
             android:id="@+id/doctorPhone"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/size_0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
+            android:gravity="center|end"
             android:padding="8dp"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/phoneTitle"
             app:layout_constraintTop_toBottomOf="@+id/doctorAddress"
             tools:text="@string/phone" />
         <!--    endregion doctorPhone-->
@@ -104,13 +114,16 @@
 
         <TextView
             android:id="@+id/doctorEmail"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/size_0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
+            android:gravity="center|end"
             android:padding="8dp"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/phoneTitle"
             app:layout_constraintTop_toBottomOf="@+id/doctorPhone"
             tools:text="@string/email" />
         <!--    endregion doctorEmail-->
@@ -130,42 +143,21 @@
 
         <TextView
             android:id="@+id/doctorWebsite"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/size_0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center|end"
             android:padding="8dp"
             android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/doctorWebsiteTitle"
             app:layout_constraintTop_toBottomOf="@+id/doctorEmail"
             tools:text="@string/website" />
-        <!--    endregion doctorEmail-->
-
-        <!--    region appointmentTime-->
-        <TextView
-            android:id="@+id/appointmentTimeTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:padding="8dp"
-            android:text="@string/appointment_time"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/nameTitle"
-            app:layout_constraintTop_toBottomOf="@+id/doctorWebsite" />
-
-        <LinearLayout
-            android:id="@+id/appointmentTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/appointmentTimeTitle"
-            app:layout_constraintTop_toBottomOf="@+id/appointmentTimeTitle"
-            app:layout_constraintVertical_bias="0.0"
-            tools:text="@string/appointment_time" />
-        <!--    endregion appointmentTime-->
+        <!--    endregion doctorWebsite-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

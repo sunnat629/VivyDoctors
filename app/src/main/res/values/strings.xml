@@ -13,4 +13,6 @@
     <string name="website">Website</string>
     <string name="ok">OK</string>
     <string name="error_label">Error</string>
+    <string name="no_network">No Internet Connection</string>
+    <string name="button_retry">Retry</string>
 </resources>

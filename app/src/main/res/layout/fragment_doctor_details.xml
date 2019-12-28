@@ -10,6 +10,7 @@
         android:id="@+id/doctorImage"
         android:layout_width="@dimen/size_0dp"
         android:layout_height="@dimen/size_0dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintDimensionRatio="w,3:4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
