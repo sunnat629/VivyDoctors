@@ -20,10 +20,7 @@ object DSConstants {
  * This object class contains all the constant values of the logger tag.
  * */
 object LoggingTags {
-    const val REPOSITORY = "REPOSITORY"
     const val MAIN_ACTIVITY = "MAIN_ACTIVITY"
     const val BASE_REPOSITORY = "BASE_REPOSITORY"
     const val DATA_S_FACTORY = "DATA_S_FACTORY"
-    const val DATA_SOURCE = "DATA_SOURCE"
-    const val VIEW_MODEL = "VIEW_MODEL"
 }

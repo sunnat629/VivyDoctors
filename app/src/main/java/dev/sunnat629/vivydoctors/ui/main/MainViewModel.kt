@@ -6,7 +6,7 @@ import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import dev.sunnat629.vivydoctors.data.utils.NetworkState
-import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsEntity
+import dev.sunnat629.vivydoctors.domain.doctors.DoctorsEntity
 import dev.sunnat629.vivydoctors.ui.base.BaseViewModel
 import dev.sunnat629.vivydoctors.ui.datasource.DataSourceFactory
 import dev.sunnat629.vivydoctors.ui.utils.DSConstants.INITIAL_LOAD_SIZE
@@ -15,6 +15,11 @@ import dev.sunnat629.vivydoctors.ui.utils.plusAssign
 import java.util.*
 import javax.inject.Inject
 
+/**
+ * @see MainViewModel
+ * This is the viewModel class and for this project, all the {@code fragments}
+ * and {@code activities} to observers all the data.
+ * */
 class MainViewModel @Inject constructor(
     private val dataSourceFactory: DataSourceFactory
 ) : BaseViewModel() {
@@ -26,7 +31,7 @@ class MainViewModel @Inject constructor(
     private val config = PagedList.Config.Builder()
         .setPageSize(PAGE_SIZE)
         .setInitialLoadSizeHint(INITIAL_LOAD_SIZE)
-        .setEnablePlaceholders(false)
+        .setEnablePlaceholders(true)
         .build()
 
     /**
@@ -77,21 +82,6 @@ class MainViewModel @Inject constructor(
         dataSourceFactory.paginationDataSourceLiveData
     ) { it.initialLoad }
 
-    /**
-     * This function will use if the fetched functionality failed somehow in the initial stage or
-     * middle of the task.
-     * */
-    fun retry() {
-        dataSourceFactory.paginationDataSourceLiveData.value?.retryAllFailed()
-    }
-
-    /**
-     * This function will used for reset the list and fetch the fresh data from the server.
-     * */
-    fun refresh() {
-        dataSourceFactory.paginationDataSourceLiveData.value?.invalidate()
-    }
-
     fun addToRecentDoctorList(selectedDoctor: DoctorsEntity) {
         _selectedDoctor.postValue(selectedDoctor)
         _recentDoctors.plusAssign(selectedDoctor)
@@ -116,5 +106,20 @@ class MainViewModel @Inject constructor(
 
     fun resetSearch() {
         _searchedDoctors.postValue(emptyList())
+    }
+
+    /**
+     * This function will use if the fetched functionality failed somehow in the initial stage or
+     * middle of the task.
+     * */
+    fun retry() {
+        dataSourceFactory.paginationDataSourceLiveData.value?.retryAllFailed()
+    }
+
+    /**
+     * This function will used for reset the list and fetch the fresh data from the server.
+     * */
+    fun refresh() {
+        dataSourceFactory.paginationDataSourceLiveData.value?.invalidate()
     }
 }

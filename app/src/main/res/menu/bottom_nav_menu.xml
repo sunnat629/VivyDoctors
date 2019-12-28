@@ -3,10 +3,10 @@
     <item
         android:id="@+id/doctorListFragment"
         android:icon="@drawable/ic_home"
-        android:title="@string/nav_all_doctor"/>
+        android:title="@string/nav_all_doctor" />
 
     <item
         android:id="@+id/recentDoctorsFragment"
         android:icon="@drawable/ic_recent"
-        android:title="@string/nav_recent_doctors"/>
+        android:title="@string/nav_recent_doctors" />
 </menu>

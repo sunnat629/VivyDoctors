@@ -4,13 +4,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsEntity
+import dev.sunnat629.vivydoctors.domain.doctors.DoctorsEntity
 import java.util.*
 
 /**
- * DoctorsAdapter.kt
- * This is a PagedListAdapter which will show in a RecyclerView using two ViewHolders
- * @see SearchedDoctorsAdapter for more details
+ * @see SearchedDoctorsAdapter
+ * This is a ListAdapter which will show in a RecyclerView using the viewHolder
  * */
 class SearchedDoctorsAdapter(
     private val onDoctorClick: (singleDoctor: DoctorsEntity) -> Unit

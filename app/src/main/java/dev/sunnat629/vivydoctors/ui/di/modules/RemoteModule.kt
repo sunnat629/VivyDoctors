@@ -6,7 +6,6 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import dagger.Module
 import dagger.Provides
 import dev.sunnat629.vivydoctors.BuildConfig
-import dev.sunnat629.vivydoctors.ui.di.GsonUTCDateAdapter
 import dev.sunnat629.vivydoctors.ui.utils.DSConstants.BASE_URL
 import dev.sunnat629.vivydoctors.ui.utils.DSConstants.CONNECT_TIMEOUT
 import dev.sunnat629.vivydoctors.ui.utils.DSConstants.READ_TIMEOUT
@@ -15,7 +14,6 @@ import okhttp3.ConnectionPool
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.joda.time.DateTime
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -32,7 +30,6 @@ abstract class RemoteModule {
         @Singleton
         fun provideGson(): Gson {
             return GsonBuilder()
-                .registerTypeAdapter(DateTime::class.java, GsonUTCDateAdapter())
                 .create()
         }
 

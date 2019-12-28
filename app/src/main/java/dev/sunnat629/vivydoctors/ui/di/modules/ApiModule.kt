@@ -5,6 +5,10 @@ import dagger.Provides
 import dev.sunnat629.vivydoctors.data.doctors.VivyDoctorsApi
 import retrofit2.Retrofit
 
+/**
+ * @see ApiModule
+ * This is an object module which will inject all the api
+ * */
 @Module
 object ApiModule {
 

@@ -2,7 +2,7 @@ package dev.sunnat629.vivydoctors.data.doctors
 
 import dev.sunnat629.vivydoctors.data.utils.NetworkResult
 import dev.sunnat629.vivydoctors.domain.doctors.VivyDoctorsRepository
-import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsListDtoEntity
+import dev.sunnat629.vivydoctors.domain.doctors.DoctorsListDtoEntity
 import dev.sunnat629.vivydoctors.ui.base.BaseRepository
 import javax.inject.Inject
 
@@ -22,8 +22,6 @@ class VivyDoctorsDataRepository @Inject constructor(
      *
      * @param doctors is the key-url using to fetch next doctors data.
      * */
-    override suspend fun getAllDoctors(doctors: String): NetworkResult<DoctorsListDtoEntity> {
-
-        return safeApiCall({ vivyDoctorsApi.getDoctorsList(doctors) }, mapper)
-    }
+    override suspend fun getAllDoctors(doctors: String): NetworkResult<DoctorsListDtoEntity> =
+        safeApiCall({ vivyDoctorsApi.getDoctorsList(doctors) }, mapper)
 }
