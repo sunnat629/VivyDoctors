@@ -1,7 +1,5 @@
 package dev.sunnat629.vivydoctors.domain.doctors.doctorList
 
-import org.joda.time.DateTime
-
 data class DoctorsListDtoEntity(
     var doctors: List<DoctorsEntity>?,
     var lastKey: String?
@@ -20,7 +18,7 @@ data class DoctorsEntity(
     var specialityIds: List<Int>?,
     var source: String?,
     var phoneNumber: String?,
-    var email: Any?,
+    var email: String?,
     var website: String?,
     var openingHours: List<String>?,
     var integration: Any?,

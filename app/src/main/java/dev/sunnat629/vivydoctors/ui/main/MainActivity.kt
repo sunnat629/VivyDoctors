@@ -10,11 +10,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.sunnat629.vivydoctors.R
 import dev.sunnat629.vivydoctors.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_tab_items.*
+import kotlinx.android.synthetic.main.content_toolbar.*
 import timber.log.Timber
 
 class MainActivity : BaseActivity<MainViewModel>(),
     BottomNavigationView.OnNavigationItemSelectedListener {
+
+    private lateinit var navController: NavController
 
     override val layoutResId: Int = R.layout.activity_main
 
@@ -23,13 +25,28 @@ class MainActivity : BaseActivity<MainViewModel>(),
     override fun getViewModel(): Class<MainViewModel> = MainViewModel::class.java
 
     override fun onInitialize(instance: Bundle?, viewModel: MainViewModel) {
+        initToolbar()
         initNavControl()
-        initTabLayouts()
         initObservers()
     }
 
+    private fun initToolbar() {
+        toolbar.apply {
+            title = resources.getString(R.string.app_name)
+            setNavigationOnClickListener {
+                finish()
+            }
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp()
+    }
+
     private fun initNavControl() {
-//        bottomNavigation.setOnNavigationItemSelectedListener(this)
+        navController = Navigation.findNavController(this, R.id.navHostFragment)
+        bottomNavigation.setupWithNavController(navController)
+        bottomNavigation.setOnNavigationItemSelectedListener(this)
     }
 
     private fun initObservers() {
@@ -40,27 +57,20 @@ class MainActivity : BaseActivity<MainViewModel>(),
         })
     }
 
-    private fun initTabLayouts() {
-        val tabsPagerAdapter = ViewPagerAdapter(this, supportFragmentManager)
-        saViewPager.adapter = tabsPagerAdapter
-        tabLayout.setupWithViewPager(saViewPager)
-    }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.doctorListFragment -> {
-                Timber.tag("ASDF").d("doctorListFragment")
-//                navController.navigate(R.id.doctorListFragment)
-                true
-            }
-            R.id.doctorDetailsFragment -> {
-//                navController.navigate(R.id.doctorDetailsFragment)
-                Timber.tag("ASDF").d("doctorDetailsFragment")
+                navController.navigate(R.id.doctorListFragment)
                 true
             }
             R.id.recentDoctorsFragment -> {
-//                navController.navigate(R.id.recentDoctorsFragment)
+                navController.navigate(R.id.recentDoctorsFragment)
                 Timber.tag("ASDF").d("recentDoctorsFragment")
+                true
+            }
+
+            R.id.doctorDetailsFragment -> {
+                navController.navigate(R.id.doctorDetailsFragment)
                 true
             }
             else -> false

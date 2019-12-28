@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import dev.sunnat629.vivydoctors.R
 import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsEntity
+import kotlinx.android.synthetic.main.content_rating.view.*
 import kotlinx.android.synthetic.main.vh_doctor_list.view.*
 
 /**
@@ -28,7 +29,7 @@ class DoctorsViewHolder(
         doctorsEntity?.apply {
             itemView.doctorName.text = name
             itemView.doctorAddress.text = address
-            itemView.reviewCount.text = reviewCount?.toString()?: "0"
+            itemView.review.text = reviewCount?.toString()?: "0"
             itemView.ratingBar.rating = rating?.toFloat()?: 0f
 
             Glide.with(itemView)

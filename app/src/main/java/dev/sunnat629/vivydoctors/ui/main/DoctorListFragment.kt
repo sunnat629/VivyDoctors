@@ -1,27 +1,18 @@
 package dev.sunnat629.vivydoctors.ui.main
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import dagger.android.support.DaggerFragment
 import dev.sunnat629.vivydoctors.R
 import dev.sunnat629.vivydoctors.data.utils.Status
 import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsEntity
+import dev.sunnat629.vivydoctors.ui.base.BaseFragment
 import dev.sunnat629.vivydoctors.ui.main.adapters.DoctorsAdapter
 import dev.sunnat629.vivydoctors.ui.utils.showIf
 import kotlinx.android.synthetic.main.fragment_doctors.*
-import timber.log.Timber
-import javax.inject.Inject
 
-class DoctorListFragment : DaggerFragment() {
-
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+class DoctorListFragment : BaseFragment<MainViewModel, MainActivity>() {
 
     private val doctorsAdapter by lazy {
         DoctorsAdapter { singleDoctor ->
@@ -29,25 +20,20 @@ class DoctorListFragment : DaggerFragment() {
         }
     }
 
-    private lateinit var viewModel: MainViewModel
+    override val layoutResId: Int = R.layout.fragment_doctors
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_doctors, container, false)
-    }
+    override val screenName: String? =
+        context?.resources?.getString(R.string.nav_all_doctor) ?: String()
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(activity!!, viewModelFactory).get(MainViewModel::class.java)
-        onInitialize()
-    }
+    override fun getViewModel(): Class<MainViewModel> = MainViewModel::class.java
 
-    private fun onInitialize() {
+    override fun getParentActivity(): MainActivity = (activity as MainActivity)
+
+    override fun onInitialize(instance: Bundle?, viewModel: MainViewModel) {
         initRecyclerView()
         initObservers()
     }
+
 
     private fun initRecyclerView() {
         doctorRecyclerView.apply {
@@ -83,6 +69,7 @@ class DoctorListFragment : DaggerFragment() {
     }
 
     private fun onDoctorClick(singleDoctor: DoctorsEntity) {
+        findNavController().navigate(R.id.action_doctorListFragment_to_doctorDetailsFragment)
         viewModel.addToRecentDoctorList(singleDoctor)
     }
 }
