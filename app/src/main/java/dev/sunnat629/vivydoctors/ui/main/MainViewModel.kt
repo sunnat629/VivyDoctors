@@ -107,19 +107,4 @@ class MainViewModel @Inject constructor(
     fun resetSearch() {
         _searchedDoctors.postValue(emptyList())
     }
-
-    /**
-     * This function will use if the fetched functionality failed somehow in the initial stage or
-     * middle of the task.
-     * */
-    fun retry() {
-        dataSourceFactory.paginationDataSourceLiveData.value?.retryAllFailed()
-    }
-
-    /**
-     * This function will used for reset the list and fetch the fresh data from the server.
-     * */
-    fun refresh() {
-        dataSourceFactory.paginationDataSourceLiveData.value?.invalidate()
-    }
 }
