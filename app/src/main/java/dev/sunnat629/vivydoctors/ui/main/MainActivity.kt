@@ -11,6 +11,7 @@ import dev.sunnat629.vivydoctors.R
 import dev.sunnat629.vivydoctors.data.utils.Status
 import dev.sunnat629.vivydoctors.ui.base.BaseActivity
 import dev.sunnat629.vivydoctors.ui.utils.LoggingTags.MAIN_ACTIVITY
+import dev.sunnat629.vivydoctors.ui.utils.showIf
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_toolbar.*
 import timber.log.Timber
@@ -50,6 +51,7 @@ class MainActivity : BaseActivity<MainViewModel>(),
         })
 
         viewModel.getInitialLoad().observe(this, Observer {
+            networkLoadingProgressBar.showIf(it.status == Status.LOADING)
             when(it.status){
                 Status.LOADING, Status.LOADED -> {}
                 Status.FAILED, Status.NO_INTERNET -> showError(it.message)
