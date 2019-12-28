@@ -32,14 +32,24 @@ class MainViewModel @Inject constructor(
     /**
      * This immutable variable contains the doctor data after fetching from.
      * */
-    val doctorsList: LiveData<PagedList<DoctorsEntity>>
+    val doctorPagedList: LiveData<PagedList<DoctorsEntity>>
 
+
+    /**
+     * This mutable and immutable list contains the doctor list which are from the doctor selection by the user
+     * */
     private val _recentDoctors = MutableLiveData<List<DoctorsEntity>>()
     val recentDoctors: LiveData<List<DoctorsEntity>> = _recentDoctors
 
+    /**
+     * This mutable and immutable data contains the selected doctor which is selected by the user
+     * */
     private val _selectedDoctor = MutableLiveData<DoctorsEntity>()
     val selectedDoctor: LiveData<DoctorsEntity> = _selectedDoctor
 
+    /**
+     * This mutable and immutable list contains the doctor list which are from the searched data by the user
+     * */
     private val _searchedDoctors = MutableLiveData<List<DoctorsEntity>>()
     val searchedDoctors: LiveData<List<DoctorsEntity>> = _searchedDoctors
 
@@ -48,26 +58,24 @@ class MainViewModel @Inject constructor(
      * DataSourceFactory.
      * */
     init {
-        doctorsList = LivePagedListBuilder(dataSourceFactory, config).build()
+        doctorPagedList = LivePagedListBuilder(dataSourceFactory, config).build()
     }
 
     /**
      * This function is a liveData of the NetworkState which observe the network status of
      * this project.
      * */
-    fun getNetworkState(): LiveData<NetworkState> =
-        Transformations.switchMap(
-            dataSourceFactory.paginationDataSourceLiveData
-        ) { it.networkState }
+    fun getNetworkState(): LiveData<NetworkState> = Transformations.switchMap(
+        dataSourceFactory.paginationDataSourceLiveData
+    ) { it.networkState }
 
     /**
      * This function is a liveData of the NetworkState which observe the network status of
      * this project.
      * */
-    fun getInitialLoad(): LiveData<NetworkState> =
-        Transformations.switchMap(
-            dataSourceFactory.paginationDataSourceLiveData
-        ) { it.initialLoad }
+    fun getInitialLoad(): LiveData<NetworkState> = Transformations.switchMap(
+        dataSourceFactory.paginationDataSourceLiveData
+    ) { it.initialLoad }
 
     /**
      * This function will use if the fetched functionality failed somehow in the initial stage or
@@ -92,7 +100,7 @@ class MainViewModel @Inject constructor(
     fun setQuery(originalInput: String) {
         val modifiedInput = originalInput.toLowerCase(Locale.getDefault())
         val searchedDoctorsByName: MutableList<DoctorsEntity> = mutableListOf()
-        doctorsList.value?.map { singleDoctor ->
+        doctorPagedList.value?.map { singleDoctor ->
             singleDoctor.name?.let {
                 if (it.contains(modifiedInput)) {
                     searchedDoctorsByName.add(singleDoctor)
@@ -103,8 +111,9 @@ class MainViewModel @Inject constructor(
     }
 
     fun getAllDoctorsForSearch() {
-        _searchedDoctors.postValue(doctorsList.value)
+        _searchedDoctors.postValue(doctorPagedList.value)
     }
+
     fun resetSearch() {
         _searchedDoctors.postValue(emptyList())
     }

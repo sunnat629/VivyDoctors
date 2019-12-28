@@ -6,7 +6,6 @@ import dev.sunnat629.vivydoctors.ui.datasource.DataSourceFactory
 import dev.sunnat629.vivydoctors.data.doctors.VivyDoctorsDataRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import javax.inject.Singleton
 

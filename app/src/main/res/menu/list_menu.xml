@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/searchDoctors"
-        android:icon="@drawable/ic_search"
+        android:icon="@drawable/ic_search_color"
         android:title="@string/search_label"
         app:showAsAction="always"/>
 </menu>

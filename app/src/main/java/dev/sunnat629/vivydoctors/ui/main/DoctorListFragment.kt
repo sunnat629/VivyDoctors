@@ -72,7 +72,7 @@ class DoctorListFragment : BaseFragment<MainViewModel, MainActivity>() {
             loadingProgressBar.showIf(it.status == Status.LOADING)
         })
 
-        viewModel.doctorsList.observe(viewLifecycleOwner, Observer {
+        viewModel.doctorPagedList.observe(viewLifecycleOwner, Observer {
             doctorsAdapter.submitList(it)
         })
     }

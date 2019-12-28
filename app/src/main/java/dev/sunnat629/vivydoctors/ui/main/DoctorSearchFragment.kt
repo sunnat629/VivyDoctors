@@ -38,7 +38,6 @@ class DoctorSearchFragment : BaseFragment<MainViewModel, MainActivity>() {
 
     override fun onInitialize(instance: Bundle?) {
         initToolbar()
-        initRecyclerView()
         initUI()
         initObservers()
     }
@@ -55,6 +54,7 @@ class DoctorSearchFragment : BaseFragment<MainViewModel, MainActivity>() {
     }
 
     private fun initUI() {
+        initRecyclerView()
         initSearchInputListener()
         initButtons()
     }
