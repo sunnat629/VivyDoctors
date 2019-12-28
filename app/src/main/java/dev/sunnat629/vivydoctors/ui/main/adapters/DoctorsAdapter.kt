@@ -4,13 +4,12 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsEntity
+import dev.sunnat629.vivydoctors.domain.doctors.DoctorsEntity
 import java.util.*
 
 /**
- * DoctorsAdapter.kt
- * This is a PagedListAdapter which will show in a RecyclerView using two ViewHolders
- * @see DoctorsAdapter for more details
+ * @see DoctorsAdapter
+ * This is a PagedListAdapter which will show in a RecyclerView using the ViewHolder
  * */
 class DoctorsAdapter(
     private val onDoctorClick: (singleDoctor: DoctorsEntity) -> Unit

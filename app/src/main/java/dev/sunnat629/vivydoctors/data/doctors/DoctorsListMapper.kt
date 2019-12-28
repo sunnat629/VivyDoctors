@@ -1,8 +1,8 @@
 package dev.sunnat629.vivydoctors.data.doctors
 
 import dev.sunnat629.vivydoctors.data.utils.Mapper
-import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsEntity
-import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsListDtoEntity
+import dev.sunnat629.vivydoctors.domain.doctors.DoctorsEntity
+import dev.sunnat629.vivydoctors.domain.doctors.DoctorsListDtoEntity
 import javax.inject.Inject
 
 class DoctorsListDtoMapper @Inject constructor(

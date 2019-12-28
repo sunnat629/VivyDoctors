@@ -3,7 +3,7 @@ package dev.sunnat629.vivydoctors.ui.datasource
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import dev.sunnat629.vivydoctors.data.doctors.VivyDoctorsDataRepository
-import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsEntity
+import dev.sunnat629.vivydoctors.domain.doctors.DoctorsEntity
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 

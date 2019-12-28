@@ -7,12 +7,17 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import dev.sunnat629.vivydoctors.R
-import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsEntity
+import dev.sunnat629.vivydoctors.domain.doctors.DoctorsEntity
 import dev.sunnat629.vivydoctors.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.content_doctor_details.*
 import kotlinx.android.synthetic.main.content_rating.*
 import kotlinx.android.synthetic.main.fragment_doctor_details.*
 
+/**
+ * @see DoctorDetailsFragment
+ *
+ * This fragment will show the details of a selected doctor by the user
+ * */
 class DoctorDetailsFragment : BaseFragment<MainViewModel, MainActivity>() {
 
     override val layoutResId: Int = R.layout.fragment_doctor_details

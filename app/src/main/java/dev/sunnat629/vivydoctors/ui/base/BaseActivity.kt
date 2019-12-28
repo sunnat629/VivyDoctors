@@ -8,7 +8,10 @@ import dagger.android.support.DaggerAppCompatActivity
 import dev.sunnat629.vivydoctors.R
 import javax.inject.Inject
 
-
+/**
+ * This is an abstract base class for every activities and it is injected activity and also
+ * initialized the viewModel and other activity related field.
+ * */
 abstract class BaseActivity<MV : BaseViewModel> : DaggerAppCompatActivity() {
 
     @Inject

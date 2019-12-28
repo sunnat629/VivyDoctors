@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
@@ -18,6 +17,10 @@ import kotlinx.android.synthetic.main.fragment_base.*
 import kotlinx.android.synthetic.main.fragment_base.view.*
 import javax.inject.Inject
 
+/**
+ * This is an abstract base class for every fragments and it is injected fragment and also
+ * initialized the viewModel and other fragment related field.
+ * */
 abstract class BaseFragment<M : BaseViewModel, C : AppCompatActivity> : DaggerFragment() {
 
     @Inject

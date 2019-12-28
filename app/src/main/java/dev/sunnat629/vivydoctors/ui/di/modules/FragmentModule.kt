@@ -7,6 +7,10 @@ import dev.sunnat629.vivydoctors.ui.main.DoctorListFragment
 import dev.sunnat629.vivydoctors.ui.main.DoctorSearchFragment
 import dev.sunnat629.vivydoctors.ui.main.RecentDoctorsFragment
 
+/**
+ * @see FragmentModule
+ * This is an abstract class module which will inject all the fragments
+ * */
 @Module
 abstract class FragmentModule {
 

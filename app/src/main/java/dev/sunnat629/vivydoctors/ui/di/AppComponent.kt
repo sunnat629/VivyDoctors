@@ -7,6 +7,17 @@ import dev.sunnat629.vivydoctors.RootApp
 import dev.sunnat629.vivydoctors.ui.di.modules.*
 import javax.inject.Singleton
 
+/**
+ * This is the component interface where we have included all the modules for inject
+ *
+ * @see AndroidSupportInjectionModule for more details
+ * @see ActivityModule for more details
+ * @see FragmentModule for more details
+ * @see ViewModelModule for more details
+ * @see RemoteModule for more details
+ * @see RepositoryModule for more details
+ * @see OthersModule for more details
+ * */
 @Singleton
 @Component(
     modules = [

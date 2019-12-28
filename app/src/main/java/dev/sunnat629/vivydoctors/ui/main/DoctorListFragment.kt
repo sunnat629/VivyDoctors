@@ -8,13 +8,20 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.sunnat629.vivydoctors.R
+import dev.sunnat629.vivydoctors.data.doctors.VivyDoctorsApi
 import dev.sunnat629.vivydoctors.data.utils.Status
-import dev.sunnat629.vivydoctors.domain.doctors.doctorList.DoctorsEntity
+import dev.sunnat629.vivydoctors.domain.doctors.DoctorsEntity
 import dev.sunnat629.vivydoctors.ui.base.BaseFragment
 import dev.sunnat629.vivydoctors.ui.main.adapters.DoctorsAdapter
 import dev.sunnat629.vivydoctors.ui.utils.showIf
 import kotlinx.android.synthetic.main.fragment_doctors.*
 
+/**
+ * @see DoctorListFragment
+ *
+ * This fragment will show all the doctor lists which are fetched from the api
+ * @see VivyDoctorsApi for more details of the endpoints
+ * */
 class DoctorListFragment : BaseFragment<MainViewModel, MainActivity>() {
 
     private val doctorsAdapter by lazy {
@@ -40,7 +47,7 @@ class DoctorListFragment : BaseFragment<MainViewModel, MainActivity>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.searchDoctors -> {
-                    findNavController().navigate(R.id.action_doctorListFragment_to_doctorSearchFragment)
+                findNavController().navigate(R.id.action_doctorListFragment_to_doctorSearchFragment)
                 true
             }
             else -> super.onOptionsItemSelected(item)

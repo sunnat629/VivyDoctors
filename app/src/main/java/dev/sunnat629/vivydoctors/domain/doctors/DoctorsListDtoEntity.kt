@@ -1,4 +1,4 @@
-package dev.sunnat629.vivydoctors.domain.doctors.doctorList
+package dev.sunnat629.vivydoctors.domain.doctors
 
 data class DoctorsListDtoEntity(
     var doctors: List<DoctorsEntity>?,

@@ -2,9 +2,8 @@ package dev.sunnat629.vivydoctors
 
 import dev.sunnat629.vivydoctors.data.utils.TIME_FORMAT_EEEE_HH_MM
 import dev.sunnat629.vivydoctors.data.utils.timeFormatToPattern
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -18,7 +17,7 @@ class ExampleUnitTest {
     }
 
     @Test
-    fun dateFormatTest(){
+    fun dateFormatTest() {
         val time = "D1T08:00/D1T12:59"
         val expectedTime = "Monday, 08:00 to 12"
 
