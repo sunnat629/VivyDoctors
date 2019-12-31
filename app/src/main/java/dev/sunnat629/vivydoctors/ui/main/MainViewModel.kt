@@ -97,11 +97,11 @@ class MainViewModel @Inject constructor(
                 }
             }
         }
-        _searchedDoctors.postValue(searchedDoctorsByName)
+        _searchedDoctors.postValue(searchedDoctorsByName.sortedByDescending { it.rating })
     }
 
     fun getAllDoctorsForSearch() {
-        _searchedDoctors.postValue(doctorPagedList.value)
+        _searchedDoctors.postValue(doctorPagedList.value?.sortedByDescending { it.rating })
     }
 
     fun resetSearch() {
