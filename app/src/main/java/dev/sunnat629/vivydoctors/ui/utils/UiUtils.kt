@@ -8,6 +8,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.DataSource
+import dev.sunnat629.vivydoctors.domain.doctors.DoctorsEntity
 
 fun View.showIf(should: Boolean) {
     this.visibility = if (should) View.VISIBLE else View.GONE
@@ -40,4 +42,10 @@ fun <T> MutableLiveData<List<T>>.plusAssign(values: T) {
     list.remove(values)
     list.add(values)
     this.value = list.takeLast(3).asReversed() // take last 3 items as question asked
+}
+
+fun DataSource.Factory<String, DoctorsEntity>.sortByRating(): DataSource.Factory<String, DoctorsEntity> {
+    return mapByPage {
+        it.sortedWith(compareByDescending { item -> item.rating })
+    }
 }

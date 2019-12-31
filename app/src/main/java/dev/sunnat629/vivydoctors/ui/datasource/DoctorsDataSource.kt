@@ -2,6 +2,7 @@ package dev.sunnat629.vivydoctors.ui.datasource
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
 import dev.sunnat629.vivydoctors.data.doctors.VivyDoctorsDataRepository
 import dev.sunnat629.vivydoctors.data.utils.NetworkResult
@@ -161,7 +162,9 @@ class DoctorsDataSource(
                 is NetworkResult.Success -> {
                     _nextPage.postValue("$FIRST_PAGE-${result.data.lastKey}")
 
-                    callback.onResult(result.data.doctors ?: emptyList(), nextPage.value)
+                    callback.onResult(
+                        result.data.doctors ?: emptyList(),
+                        nextPage.value)
                     _networkState.postValue(LOADED)
                 }
 

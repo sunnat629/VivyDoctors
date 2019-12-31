@@ -3,6 +3,7 @@ package dev.sunnat629.vivydoctors.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import dev.sunnat629.vivydoctors.data.utils.NetworkState
@@ -12,6 +13,7 @@ import dev.sunnat629.vivydoctors.ui.datasource.DataSourceFactory
 import dev.sunnat629.vivydoctors.ui.utils.DSConstants.INITIAL_LOAD_SIZE
 import dev.sunnat629.vivydoctors.ui.utils.DSConstants.PAGE_SIZE
 import dev.sunnat629.vivydoctors.ui.utils.plusAssign
+import dev.sunnat629.vivydoctors.ui.utils.sortByRating
 import java.util.*
 import javax.inject.Inject
 
@@ -63,7 +65,7 @@ class MainViewModel @Inject constructor(
      * DataSourceFactory.
      * */
     init {
-        doctorPagedList = LivePagedListBuilder(dataSourceFactory, config).build()
+        doctorPagedList = LivePagedListBuilder(dataSourceFactory.sortByRating(), config).build()
     }
 
     /**
