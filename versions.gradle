@@ -5,7 +5,7 @@ ext {
             targetSdk           : 29,
             versionCode         : 1,
 
-            kotlin              : "1.3.41",
+            kotlin              : "1.3.61",
             appcompat           : "1.1.0",
             lifecycle           : "2.1.0",
 
@@ -13,17 +13,17 @@ ext {
             constraintlayout    : "1.1.3",
             recyclerview        : "1.0.0",
 
+            coroutines          : "1.3.3",
 
-            coroutines          : "1.3.0",
+            retrofit            : "2.7.0",
+            okhttp3             : "4.2.2",
+            retrofit2Coroutines: "0.9.2",
 
-            retrofit            : "2.6.1",
-            okhttp              : "4.1.0",
-            retrofit2_rxjava    : "2.6.1",
-            retrofit2_coroutines: "0.9.2",
-
-            dagger              : "2.24",
+            dagger              : "2.25.4",
 
             timber              : "4.7.1",
+
+            glide                : "4.10.0",
 
             junit               : "4.12",
             nhaarman_mockito    : "2.1.0",
@@ -32,10 +32,5 @@ ext {
             androidTestRules    : "1.2.0",
             testExtJunit        : "1.1.1",
             testCore            : "1.2.0",
-
-            picasso             : "2.71828",
-
-            rxandroid           : "2.1.1",
-            rxjava              : "2.2.12",
     ]
 }

@@ -1,5 +1,6 @@
 package dev.sunnat629.vivydoctors.ui.datasource
 
+import androidx.arch.core.util.Function
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import dev.sunnat629.vivydoctors.data.doctors.VivyDoctorsDataRepository
@@ -23,5 +24,9 @@ class DataSourceFactory @Inject constructor(
         val usersDataSource = DoctorsDataSource(scope, doctorsRepository)
         paginationDataSourceLiveData.postValue(usersDataSource)
         return usersDataSource
+    }
+
+    override fun <ToValue : Any?> mapByPage(function: Function<MutableList<DoctorsEntity>, MutableList<ToValue>>): DataSource.Factory<String, ToValue> {
+        return super.mapByPage(function)
     }
 }
