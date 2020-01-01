@@ -48,7 +48,7 @@ fun <T> getRecentDoctors(liveDataList: MutableList<T>, values: T, size: Int): Li
     return liveDataList.takeLast(size)
 }
 
-fun searchDoctors(list: MutableList<DoctorsEntity>?, modifiedInput: String): List<DoctorsEntity> {
+fun searchDoctors(list: List<DoctorsEntity>?, modifiedInput: String): List<DoctorsEntity> {
     val searchedDoctorsByName: MutableList<DoctorsEntity> = mutableListOf()
 
     list?.map { singleDoctor ->

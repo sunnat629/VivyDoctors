@@ -6,8 +6,8 @@
     android:layout_height="match_parent">
 
     <include
-        layout="@layout/content_empty_recent_dr"
         android:id="@+id/emptyRecentDr"
+        layout="@layout/content_empty_recent_dr"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
