@@ -57,7 +57,7 @@ class RecentDoctorsFragment : BaseFragment<MainViewModel, MainActivity>() {
         viewModel.recentDoctors.observe(viewLifecycleOwner, Observer {
             emptyRecentDr.showIf(it.isNullOrEmpty())
             recentDoctorRecyclerView.showIf(!emptyRecentDr.isVisible)
-            recentDoctorsAdapter.submitList(it)
+            recentDoctorsAdapter.submitList(it.reversed())
         })
     }
 
