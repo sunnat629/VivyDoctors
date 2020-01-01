@@ -3,7 +3,6 @@ package dev.sunnat629.vivydoctors.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import dev.sunnat629.vivydoctors.data.utils.NetworkState
@@ -12,7 +11,9 @@ import dev.sunnat629.vivydoctors.ui.base.BaseViewModel
 import dev.sunnat629.vivydoctors.ui.datasource.DataSourceFactory
 import dev.sunnat629.vivydoctors.ui.utils.DSConstants.INITIAL_LOAD_SIZE
 import dev.sunnat629.vivydoctors.ui.utils.DSConstants.PAGE_SIZE
-import dev.sunnat629.vivydoctors.ui.utils.plusAssign
+import dev.sunnat629.vivydoctors.ui.utils.DSConstants.RECENT_DOCTOR_LIST_SIZE
+import dev.sunnat629.vivydoctors.ui.utils.getRecentDoctors
+import dev.sunnat629.vivydoctors.ui.utils.searchDoctors
 import dev.sunnat629.vivydoctors.ui.utils.sortByRating
 import java.util.*
 import javax.inject.Inject
@@ -86,20 +87,13 @@ class MainViewModel @Inject constructor(
 
     fun addToRecentDoctorList(selectedDoctor: DoctorsEntity) {
         _selectedDoctor.postValue(selectedDoctor)
-        _recentDoctors.plusAssign(selectedDoctor)
+        _recentDoctors.getRecentDoctors(selectedDoctor, RECENT_DOCTOR_LIST_SIZE)
     }
 
     fun setQuery(originalInput: String) {
         val modifiedInput = originalInput.toLowerCase(Locale.getDefault())
-        val searchedDoctorsByName: MutableList<DoctorsEntity> = mutableListOf()
-        doctorPagedList.value?.map { singleDoctor ->
-            singleDoctor.name?.let {
-                if (it.contains(modifiedInput)) {
-                    searchedDoctorsByName.add(singleDoctor)
-                }
-            }
-        }
-        _searchedDoctors.postValue(searchedDoctorsByName.sortedByDescending { it.rating })
+        val searchedDoctorsByName =searchDoctors(doctorPagedList.value, modifiedInput).sortedByDescending { it.rating }
+        _searchedDoctors.postValue(searchedDoctorsByName)
     }
 
     fun getAllDoctorsForSearch() {

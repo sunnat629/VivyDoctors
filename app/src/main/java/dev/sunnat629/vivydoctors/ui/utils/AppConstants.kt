@@ -13,6 +13,8 @@ object DSConstants {
     const val READ_TIMEOUT = 30L
     const val PAGE_SIZE = 10
     const val INITIAL_LOAD_SIZE = PAGE_SIZE.times(2)
+
+    const val RECENT_DOCTOR_LIST_SIZE = 3  // take last 3 items as question asked
 }
 
 /**

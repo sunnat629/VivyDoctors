@@ -5,11 +5,11 @@ import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import dev.sunnat629.vivydoctors.domain.doctors.DoctorsEntity
+import java.util.*
 
 fun View.showIf(should: Boolean) {
     this.visibility = if (should) View.VISIBLE else View.GONE
@@ -36,13 +36,31 @@ private fun Context.hideKeyboard(view: View) {
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
-fun <T> MutableLiveData<List<T>>.plusAssign(values: T) {
+fun <T> MutableLiveData<List<T>>.getRecentDoctors(values: T, size: Int) {
     val list = this.value?.toMutableList() ?: mutableListOf()
-    list.reverse()
-    list.remove(values)
-    list.add(values)
-    this.value = list.takeLast(3).asReversed() // take last 3 items as question asked
+    this.value = getRecentDoctors(list, values, size)
 }
+
+
+fun <T> getRecentDoctors(liveDataList: MutableList<T>, values: T, size: Int): List<T> {
+    if (liveDataList.contains(values)) liveDataList.remove(values)
+    liveDataList.add(values)
+    return liveDataList.takeLast(size)
+}
+
+fun searchDoctors(list: MutableList<DoctorsEntity>?, modifiedInput: String): List<DoctorsEntity> {
+    val searchedDoctorsByName: MutableList<DoctorsEntity> = mutableListOf()
+
+    list?.map { singleDoctor ->
+        singleDoctor.name?.let {
+            if (it.toLowerCase(Locale.getDefault()).contains(modifiedInput)) {
+                searchedDoctorsByName.add(singleDoctor)
+            }
+        }
+    }
+    return searchedDoctorsByName
+}
+
 
 fun DataSource.Factory<String, DoctorsEntity>.sortByRating(): DataSource.Factory<String, DoctorsEntity> {
     return mapByPage {
