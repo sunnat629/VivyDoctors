@@ -92,7 +92,8 @@ class MainViewModel @Inject constructor(
 
     fun setQuery(originalInput: String) {
         val modifiedInput = originalInput.toLowerCase(Locale.getDefault())
-        val searchedDoctorsByName =searchDoctors(doctorPagedList.value, modifiedInput).sortedByDescending { it.rating }
+        val searchedDoctorsByName =
+            searchDoctors(doctorPagedList.value, modifiedInput).sortedByDescending { it.rating }
         _searchedDoctors.postValue(searchedDoctorsByName)
     }
 

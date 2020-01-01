@@ -1,26 +1,26 @@
 package dev.sunnat629.vivydoctors.domain.doctors
 
 data class DoctorsListDtoEntity(
-    var doctors: List<DoctorsEntity>?,
-    var lastKey: String?
+    var doctors: List<DoctorsEntity>? = null,
+    var lastKey: String? = null
 )
 
 data class DoctorsEntity(
-    var id: String?,
-    var name: String?,
-    var photoId: String?,
-    var rating: Double?,
-    var address: String?,
-    var lat: Double?,
-    var lng: Double?,
-    var highlighted: Boolean?,
-    var reviewCount: Int?,
-    var specialityIds: List<Int>?,
-    var source: String?,
-    var phoneNumber: String?,
-    var email: String?,
-    var website: String?,
-    var openingHours: List<String>?,
-    var integration: Any?,
-    var translation: Any?
+    var id: String? = null,
+    var name: String? = null,
+    var photoId: String? = null,
+    var rating: Double? = null,
+    var address: String? = null,
+    var lat: Double? = null,
+    var lng: Double? = null,
+    var highlighted: Boolean? = null,
+    var reviewCount: Int? = null,
+    var specialityIds: List<Int>? = null,
+    var source: String? = null,
+    var phoneNumber: String? = null,
+    var email: String? = null,
+    var website: String? = null,
+    var openingHours: List<String>? = null,
+    var integration: Any? = null,
+    var translation: Any? = null
 )
