@@ -46,9 +46,11 @@ class UiUtilsTest {
         )
         assertEquals(2, searchDoctors(actualList, "s").size)
 
+        assertEquals(4, searchDoctors(actualList, "E").size)
+
         assertEquals(4, searchDoctors(actualList, "e").size)
 
-        assertEquals(1, searchDoctors(actualList, "sa").size)
+        assertEquals(1, searchDoctors(actualList, "sA").size)
 
         assertEquals(1, searchDoctors(actualList, "cv").size)
     }

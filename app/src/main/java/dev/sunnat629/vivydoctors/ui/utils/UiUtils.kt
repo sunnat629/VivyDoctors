@@ -53,7 +53,7 @@ fun searchDoctors(list: List<DoctorsEntity>?, modifiedInput: String): List<Docto
 
     list?.map { singleDoctor ->
         singleDoctor.name?.let {
-            if (it.toLowerCase(Locale.getDefault()).contains(modifiedInput)) {
+            if (it.toLowerCase(Locale.getDefault()).contains(modifiedInput.toLowerCase(Locale.getDefault()))) {
                 searchedDoctorsByName.add(singleDoctor)
             }
         }

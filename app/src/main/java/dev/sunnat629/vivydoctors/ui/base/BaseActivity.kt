@@ -1,5 +1,6 @@
 package dev.sunnat629.vivydoctors.ui.base
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
@@ -21,6 +22,9 @@ abstract class BaseActivity<MV : BaseViewModel> : DaggerAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
         setLayout(layoutResId)
         viewModel = ViewModelProvider(this, viewModelFactory).get(getViewModel())
         onInitialize(savedInstanceState, viewModel)
