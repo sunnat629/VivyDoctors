@@ -7,7 +7,6 @@ import org.junit.Test
 
 class UtilsTest {
 
-
     @Test
     fun reversedListTest() {
 
