@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.annotation.UiThreadTest
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
-import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -71,7 +71,7 @@ class AppInstrumentedTest {
     @SmallTest
     fun doctorRecyclerViewTest() {
         onView(withId(R.id.doctorRecyclerView)).check(matches(isDisplayed()))
-        Thread.sleep(10000) // waiting a while to load the view
+        Thread.sleep(WAITING_LONG_TIME) // waiting a while to load the view
         onView(withId(R.id.doctorRecyclerView))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
@@ -79,7 +79,7 @@ class AppInstrumentedTest {
                     click()
                 )
             )
-        Thread.sleep(1000) // waiting a while to see the fragment
+        Thread.sleep(WAITING_SHORT_TIME) // waiting a while to see the fragment
         onView(withId(R.id.doctorImage)).check(matches(isDisplayed()))
     }
 
@@ -89,7 +89,7 @@ class AppInstrumentedTest {
         val doctorRecyclerView =
             activityTestRule.activity.findViewById(R.id.doctorRecyclerView) as RecyclerView?
 
-        Thread.sleep(10000) // waiting a while to load the view
+        Thread.sleep(WAITING_LONG_TIME) // waiting a while to load the view
         // navigate to recent fragment and check empty text
         onView(withId(R.id.recentDoctorsFragment))
             .perform(click())
@@ -116,7 +116,7 @@ class AppInstrumentedTest {
                     )
         }
 
-        Thread.sleep(1000) // waiting a while to see the fragment
+        Thread.sleep(WAITING_SHORT_TIME) // waiting a while to see the fragment
 
         // checking the doctor image is showing or not
         onView(withId(R.id.doctorImage)).check(matches(isDisplayed()))
@@ -134,6 +134,23 @@ class AppInstrumentedTest {
         assertEquals(1, recentDoctorRecyclerView?.adapter?.itemCount)
     }
 
+    @Test
+    @SmallTest
+    fun searchDoctorTest() {
+        onView(withId(R.id.doctorRecyclerView)).check(matches(isDisplayed()))
+        Thread.sleep(WAITING_LONG_TIME) // waiting a while to load the view
+
+        // navigate to recent fragment and check empty text
+        onView(withId(R.id.searchDoctors))
+            .perform(click())
+
+        onView(withId(R.id.doctorSearchEditText)).perform(clearText(),typeText("ho"))
+        val searchRecyclerView =
+            activityTestRule.activity.findViewById(R.id.searchRecyclerView) as RecyclerView?
+        Thread.sleep(WAITING_SHORT_TIME) // waiting a while to see the fragment
+        assertEquals(2, searchRecyclerView?.adapter?.itemCount)
+    }
+
     @UiThreadTest
     @Test
     @SmallTest
@@ -146,5 +163,10 @@ class AppInstrumentedTest {
         bottomNavigation.menu.removeItem(0)
         bottomNavigation.menu.removeItem(0)
         assertEquals(3, bottomNavigation.menu.size())
+    }
+    
+    companion object {st
+        const val WAITING_LONG_TIME = 7_000L // Can be decreased or increased the time based internet speed
+        const val WAITING_SHORT_TIME = 1000L
     }
 }
