@@ -26,6 +26,7 @@ ext {
             timber             : "4.7.1",
 
             glide              : "4.10.0",
+            leakcanary         : "2.1",
 
             junit              : "4.12",
             mockito            : "2.1.0",

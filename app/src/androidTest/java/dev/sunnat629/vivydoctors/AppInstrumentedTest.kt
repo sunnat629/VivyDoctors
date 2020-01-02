@@ -146,7 +146,7 @@ class AppInstrumentedTest {
 
         onView(withId(R.id.doctorSearchEditText)).perform(clearText(),typeText("ho"))
         val searchRecyclerView =
-            activityTestRule.activity.findViewById(R.id.searchRecyclerView) as RecyclerView?
+            activityTestRule.activity.findViewById(R.id.searchDoctorRecyclerView) as RecyclerView?
         Thread.sleep(WAITING_SHORT_TIME) // waiting a while to see the fragment
         assertEquals(2, searchRecyclerView?.adapter?.itemCount)
     }

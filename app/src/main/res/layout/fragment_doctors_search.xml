@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/searchRecyclerView"
+        android:id="@+id/searchDoctorRecyclerView"
         android:layout_width="@dimen/size_0dp"
         android:layout_height="@dimen/size_0dp"
         android:layout_marginTop="8dp"

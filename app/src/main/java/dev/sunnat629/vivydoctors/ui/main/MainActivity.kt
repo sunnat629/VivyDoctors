@@ -10,6 +10,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.sunnat629.vivydoctors.R
 import dev.sunnat629.vivydoctors.data.utils.Status
 import dev.sunnat629.vivydoctors.ui.base.BaseActivity
+import dev.sunnat629.vivydoctors.ui.utils.CacheUtils
 import dev.sunnat629.vivydoctors.ui.utils.LoggingTags.MAIN_ACTIVITY
 import dev.sunnat629.vivydoctors.ui.utils.showIf
 import kotlinx.android.synthetic.main.activity_main.*
@@ -76,6 +77,11 @@ class MainActivity : BaseActivity<MainViewModel>(),
             }
             else -> false
         }
+    }
+
+    override fun onDestroy() {
+        CacheUtils.deleteCache(applicationContext)
+        super.onDestroy()
     }
 
     override fun onBackPressed() {
