@@ -5,14 +5,16 @@ import dev.sunnat629.vivydoctors.ui.utils.DSConstants.RECENT_DOCTOR_LIST_SIZE
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class UiUtilsTest {
+class UtilsTest {
 
 
     @Test
     fun reversedListTest() {
 
-        var actualList = listOf<Int>()
         val size = RECENT_DOCTOR_LIST_SIZE
+
+        var actualList = listOf<Int>()
+        assertEquals(listOf<Int>(), actualList)
 
         actualList = getRecentDoctors(actualList.toMutableList(), 4, size)
         assertEquals(listOf(4), actualList)
