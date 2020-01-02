@@ -88,4 +88,9 @@ class DoctorListFragment : BaseFragment<MainViewModel, MainActivity>() {
         findNavController().navigate(R.id.action_doctorListFragment_to_doctorDetailsFragment)
         viewModel.addToRecentDoctorList(singleDoctor)
     }
+
+    override fun onDestroyView() {
+        doctorRecyclerView.adapter = null
+        super.onDestroyView()
+    }
 }

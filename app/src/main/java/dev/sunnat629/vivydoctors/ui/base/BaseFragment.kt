@@ -28,7 +28,7 @@ abstract class BaseFragment<M : BaseViewModel, C : AppCompatActivity> : DaggerFr
 
     protected lateinit var viewModel: M
 
-    private lateinit var fragmentContainer: View
+    private var fragmentContainer: View? = null
 
     private var actionBar: ActionBar? = null
 
@@ -49,12 +49,19 @@ abstract class BaseFragment<M : BaseViewModel, C : AppCompatActivity> : DaggerFr
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        fragmentContainer = inflater.inflate(R.layout.fragment_base, null)
-        layoutInflater
-            .inflate(layoutResId, fragmentContainer.fragmentBaseContent)
-        setHasOptionsMenu(true)
+        fragmentContainer = inflater.inflate(R.layout.fragment_base, container, false)
+        fragmentContainer?.let {
+            layoutInflater.inflate(layoutResId, it.fragmentBaseContent)
+            setHasOptionsMenu(true)
+        }
         return fragmentContainer
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        fragmentContainer = null
+        actionBar = null
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

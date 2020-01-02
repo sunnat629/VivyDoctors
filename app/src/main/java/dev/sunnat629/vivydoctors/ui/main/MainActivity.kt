@@ -78,6 +78,11 @@ class MainActivity : BaseActivity<MainViewModel>(),
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+    }
+
     override fun onBackPressed() {
         when (navController.currentDestination?.id) {
             R.id.doctorListFragment -> finish()

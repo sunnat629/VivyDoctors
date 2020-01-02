@@ -78,7 +78,7 @@ class DoctorSearchFragment : BaseFragment<MainViewModel, MainActivity>() {
     }
 
     private fun initRecyclerView() {
-        searchRecyclerView.apply {
+        searchDoctorRecyclerView.apply {
             this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             this.adapter = searchedDoctorsAdapter
         }
@@ -99,8 +99,8 @@ class DoctorSearchFragment : BaseFragment<MainViewModel, MainActivity>() {
 
     private fun initObservers() {
         viewModel.searchedDoctors.observe(viewLifecycleOwner, Observer {
-            searchRecyclerView.showIf(it.isNotEmpty())
-            searchNoDoctor.showIf(!searchRecyclerView.isVisible)
+            searchDoctorRecyclerView.showIf(it.isNotEmpty())
+            searchNoDoctor.showIf(!searchDoctorRecyclerView.isVisible)
             searchedDoctorsAdapter.submitList(it)
         })
     }
@@ -113,5 +113,10 @@ class DoctorSearchFragment : BaseFragment<MainViewModel, MainActivity>() {
     private fun doSearch() {
         val query = doctorSearchEditText.text.toString().trim()
         viewModel.setQuery(query)
+    }
+
+    override fun onDestroyView() {
+        searchDoctorRecyclerView.adapter = null
+        super.onDestroyView()
     }
 }

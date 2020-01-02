@@ -32,7 +32,7 @@ class DoctorsViewHolder(
             itemView.review.text = reviewCount?.toString() ?: "0"
             itemView.ratingBar.rating = rating?.toFloat() ?: 0f
 
-            Glide.with(itemView)
+            Glide.with(itemView.context)
                 .asBitmap()
                 .apply(RequestOptions().override(200, 200))
                 .load(photoId)

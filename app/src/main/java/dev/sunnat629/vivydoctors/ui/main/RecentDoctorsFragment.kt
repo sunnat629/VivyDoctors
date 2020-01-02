@@ -12,7 +12,6 @@ import dev.sunnat629.vivydoctors.ui.base.BaseFragment
 import dev.sunnat629.vivydoctors.ui.main.adapters.RecentDoctorsAdapter
 import dev.sunnat629.vivydoctors.ui.utils.showIf
 import kotlinx.android.synthetic.main.fragment_recent_doctor.*
-import timber.log.Timber
 
 /**
  * @see RecentDoctorsFragment
@@ -29,7 +28,8 @@ class RecentDoctorsFragment : BaseFragment<MainViewModel, MainActivity>() {
 
     override val layoutResId: Int = R.layout.fragment_recent_doctor
 
-    override val screenName: String? = context?.resources?.getString(R.string.nav_recent_doctors) ?: String()
+    override val screenName: String? =
+        context?.resources?.getString(R.string.nav_recent_doctors) ?: String()
 
     override fun getViewModel(): Class<MainViewModel> = MainViewModel::class.java
 
@@ -61,9 +61,13 @@ class RecentDoctorsFragment : BaseFragment<MainViewModel, MainActivity>() {
         })
     }
 
-
     private fun onDoctorClick(singleDoctor: DoctorsEntity) {
         findNavController().navigate(R.id.action_recentDoctorsFragment_to_doctorDetailsFragment)
         viewModel.addToRecentDoctorList(singleDoctor)
+    }
+
+    override fun onDestroyView() {
+        recentDoctorRecyclerView.adapter = null
+        super.onDestroyView()
     }
 }

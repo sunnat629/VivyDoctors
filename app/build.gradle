@@ -132,4 +132,7 @@ dependencies {
     androidTestImplementation "androidx.test:core:${versions.androidTestRules}"
     androidTestImplementation "androidx.test:runner:${versions.androidTestRules}"
     androidTestImplementation "androidx.test:rules:${versions.androidTestRules}"
+
+    // memory leak check
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:${versions.leakcanary}"
 }
