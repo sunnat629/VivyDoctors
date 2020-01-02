@@ -165,7 +165,7 @@ class AppInstrumentedTest {
         assertEquals(3, bottomNavigation.menu.size())
     }
     
-    companion object {st
+    companion object {
         const val WAITING_LONG_TIME = 7_000L // Can be decreased or increased the time based internet speed
         const val WAITING_SHORT_TIME = 1000L
     }
