@@ -119,7 +119,7 @@ dependencies {
 
     // unit testing
     testImplementation "junit:junit:${versions.junit}"
-//    testImplementation "org.mockito:mockito-core:${versions.mockito}"
+
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:${versions.nhaarmanMockito}"
     androidTestImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:${versions.nhaarmanMockito}"
 
@@ -134,5 +134,5 @@ dependencies {
     androidTestImplementation "androidx.test:rules:${versions.androidTestRules}"
 
     // memory leak check
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:${versions.leakcanary}"
+    // debugImplementation "com.squareup.leakcanary:leakcanary-android:${versions.leakcanary}"
 }
